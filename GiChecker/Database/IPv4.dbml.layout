@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="IPv4">
+  <DataContextMoniker Name="/IPv4DataContext" />
+  <nestedChildShapes>
+    <classShape Id="baf004a3-08c6-4da4-a125-bb5115c59184" absoluteBounds="3.375, 1.625, 2, 2.6460697428385416">
+      <DataClassMoniker Name="/IPv4DataContext/IPv4SSL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="411e8245-8096-482b-b638-3fd77df7249e" absoluteBounds="3.39, 2.085, 1.9700000000000002, 2.0860697428385415" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
