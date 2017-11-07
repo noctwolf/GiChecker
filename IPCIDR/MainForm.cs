@@ -59,6 +59,8 @@ namespace IPCIDR
             //IPv4SSL ip = new IPv4SSL(request.Address.Host, certificate);
             //IPQueue.Enqueue(ip);
             //ProcessIPQueue();
+            certificate.Dispose();
+            chain.Dispose();
             return true;
         }
 

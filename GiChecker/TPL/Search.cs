@@ -121,12 +121,15 @@ namespace GiChecker.TPL
                         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format("https://{0}", value));
                         request.Timeout = 5000;
                         request.AllowAutoRedirect = false;
+                        request.AllowWriteStreamBuffering = false;
                         request.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
                         {
+                            chain.Dispose();
                             if (certificate == null) return false;
                             ip.Issuer = ((X509Certificate2)certificate).GetNameInfo(X509NameType.SimpleName, true);
                             ip.Subject = ((X509Certificate2)certificate).GetNameInfo(X509NameType.SimpleName, false);
                             if (ip.IsGoogle) CodeSite.Send("IP", value.ToString());
+                            certificate.Dispose();
                             return ip.IsGoogle;
                         };
                         request.Method = "HEAD";
