@@ -36,7 +36,6 @@ Connection:Close
             InitializeComponent();
             FileInfo fi = new FileInfo("IPv4Reserved.txt");
             if (fi.Exists) IPNetworkSet.IPv4Reserved.Add(File.ReadAllText(fi.FullName, Encoding.Default));
-            IPv4DB.Load("17monipdb.dat");
         }
 
         private void buttonCheck_Click(object sender, EventArgs e)

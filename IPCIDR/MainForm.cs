@@ -200,5 +200,33 @@ namespace IPCIDR
             all.Sort();
             File.WriteAllLines("GoogleIPHunter.txt", all.Select(p => p.ToString()));
         }
+
+        private void buttonIPv4DB_Click(object sender, EventArgs e)
+        {
+            CodeSite.SendCollection("0.255.255.255", IPv4DB.Find(IPAddress.Parse("0.255.255.255")));
+            Random r = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                int ip = r.Next(int.MinValue, int.MaxValue);
+                IPAddress ipa = ((uint)ip).ToIPAddress();
+                CodeSite.SendCollection(ipa.ToString(), IPv4DB.Find(ipa.ToString()));
+                CodeSite.SendCollection(ipa.ToString(), IPv4DB.Find(ipa));
+            }
+        }
+    }
+
+    static class IPAddressExtension
+    {
+        public static uint ToUInt32(this IPAddress value)
+        {
+            if (value.AddressFamily != AddressFamily.InterNetwork)
+                throw new SocketException((int)SocketError.OperationNotSupported);
+            return BitConverter.ToUInt32(value.GetAddressBytes().Reverse().ToArray(), 0);
+        }
+
+        public static IPAddress ToIPAddress(this uint value)
+        {
+            return new IPAddress(BitConverter.GetBytes(value).Reverse().ToArray());
+        }
     }
 }

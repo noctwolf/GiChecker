@@ -33,6 +33,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonGoogleIPHunter = new System.Windows.Forms.Button();
+            this.buttonIPv4DB = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -83,11 +84,22 @@
             this.buttonGoogleIPHunter.UseVisualStyleBackColor = true;
             this.buttonGoogleIPHunter.Click += new System.EventHandler(this.buttonGoogleIPHunter_Click);
             // 
+            // buttonIPv4DB
+            // 
+            this.buttonIPv4DB.Location = new System.Drawing.Point(361, 12);
+            this.buttonIPv4DB.Name = "buttonIPv4DB";
+            this.buttonIPv4DB.Size = new System.Drawing.Size(75, 23);
+            this.buttonIPv4DB.TabIndex = 5;
+            this.buttonIPv4DB.Text = "IPv4DB";
+            this.buttonIPv4DB.UseVisualStyleBackColor = true;
+            this.buttonIPv4DB.Click += new System.EventHandler(this.buttonIPv4DB_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(528, 328);
+            this.Controls.Add(this.buttonIPv4DB);
             this.Controls.Add(this.buttonGoogleIPHunter);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button3);
@@ -108,6 +120,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button buttonGoogleIPHunter;
+        private System.Windows.Forms.Button buttonIPv4DB;
     }
 }
 
