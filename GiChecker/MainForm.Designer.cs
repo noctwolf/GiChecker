@@ -34,13 +34,6 @@
             this.buttonCheck = new System.Windows.Forms.Button();
             this.buttonHttp = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button扫描全球 = new System.Windows.Forms.Button();
-            this.labelCount = new System.Windows.Forms.Label();
-            this.button更新 = new System.Windows.Forms.Button();
-            this.buttonMMF = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.延迟 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.类型 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +41,15 @@
             this.颁发给 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.谷歌 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.归属地 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.button扫描全球 = new System.Windows.Forms.Button();
+            this.labelCount = new System.Windows.Forms.Label();
+            this.button更新 = new System.Windows.Forms.Button();
+            this.buttonMMF = new System.Windows.Forms.Button();
+            this.buttonGoogleIP = new System.Windows.Forms.Button();
+            this.buttonGoogleIPHunter = new System.Windows.Forms.Button();
+            this.buttonIPv4DB = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -102,80 +104,16 @@
             this.归属地});
             this.dataGridView1.DataSource = this.bindingSource1;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 30);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 58);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 50;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(784, 381);
+            this.dataGridView1.Size = new System.Drawing.Size(784, 353);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.button扫描全球);
-            this.flowLayoutPanel1.Controls.Add(this.labelCount);
-            this.flowLayoutPanel1.Controls.Add(this.button更新);
-            this.flowLayoutPanel1.Controls.Add(this.buttonMMF);
-            this.flowLayoutPanel1.Controls.Add(this.button1);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(784, 30);
-            this.flowLayoutPanel1.TabIndex = 6;
-            // 
-            // button扫描全球
-            // 
-            this.button扫描全球.Location = new System.Drawing.Point(3, 3);
-            this.button扫描全球.Name = "button扫描全球";
-            this.button扫描全球.Size = new System.Drawing.Size(75, 23);
-            this.button扫描全球.TabIndex = 0;
-            this.button扫描全球.Text = "扫描全球";
-            this.button扫描全球.UseVisualStyleBackColor = true;
-            this.button扫描全球.Click += new System.EventHandler(this.button扫描全球_Click);
-            // 
-            // labelCount
-            // 
-            this.labelCount.AutoSize = true;
-            this.labelCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelCount.Location = new System.Drawing.Point(84, 0);
-            this.labelCount.Name = "labelCount";
-            this.labelCount.Size = new System.Drawing.Size(29, 29);
-            this.labelCount.TabIndex = 2;
-            this.labelCount.Text = "进度";
-            this.labelCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button更新
-            // 
-            this.button更新.Location = new System.Drawing.Point(119, 3);
-            this.button更新.Name = "button更新";
-            this.button更新.Size = new System.Drawing.Size(75, 23);
-            this.button更新.TabIndex = 3;
-            this.button更新.Text = "更新";
-            this.button更新.UseVisualStyleBackColor = true;
-            this.button更新.Click += new System.EventHandler(this.button更新_Click);
-            // 
-            // buttonMMF
-            // 
-            this.buttonMMF.Location = new System.Drawing.Point(200, 3);
-            this.buttonMMF.Name = "buttonMMF";
-            this.buttonMMF.Size = new System.Drawing.Size(75, 23);
-            this.buttonMMF.TabIndex = 1;
-            this.buttonMMF.Text = "MMF IP";
-            this.buttonMMF.UseVisualStyleBackColor = true;
-            this.buttonMMF.Click += new System.EventHandler(this.buttonMMF_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(281, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // IP
             // 
@@ -247,6 +185,100 @@
             this.归属地.Name = "归属地";
             this.归属地.ReadOnly = true;
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.Controls.Add(this.button扫描全球);
+            this.flowLayoutPanel1.Controls.Add(this.labelCount);
+            this.flowLayoutPanel1.Controls.Add(this.button更新);
+            this.flowLayoutPanel1.Controls.Add(this.buttonMMF);
+            this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIP);
+            this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIPHunter);
+            this.flowLayoutPanel1.Controls.Add(this.buttonIPv4DB);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(784, 58);
+            this.flowLayoutPanel1.TabIndex = 6;
+            // 
+            // button扫描全球
+            // 
+            this.button扫描全球.AutoSize = true;
+            this.button扫描全球.Location = new System.Drawing.Point(3, 3);
+            this.button扫描全球.Name = "button扫描全球";
+            this.button扫描全球.Size = new System.Drawing.Size(75, 23);
+            this.button扫描全球.TabIndex = 0;
+            this.button扫描全球.Text = "扫描全球";
+            this.button扫描全球.UseVisualStyleBackColor = true;
+            this.button扫描全球.Click += new System.EventHandler(this.button扫描全球_Click);
+            // 
+            // labelCount
+            // 
+            this.labelCount.AutoSize = true;
+            this.labelCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelCount.Location = new System.Drawing.Point(84, 3);
+            this.labelCount.Margin = new System.Windows.Forms.Padding(3);
+            this.labelCount.Name = "labelCount";
+            this.labelCount.Size = new System.Drawing.Size(29, 23);
+            this.labelCount.TabIndex = 2;
+            this.labelCount.Text = "进度";
+            this.labelCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // button更新
+            // 
+            this.button更新.AutoSize = true;
+            this.button更新.Location = new System.Drawing.Point(119, 3);
+            this.button更新.Name = "button更新";
+            this.button更新.Size = new System.Drawing.Size(75, 23);
+            this.button更新.TabIndex = 3;
+            this.button更新.Text = "更新";
+            this.button更新.UseVisualStyleBackColor = true;
+            this.button更新.Click += new System.EventHandler(this.button更新_Click);
+            // 
+            // buttonMMF
+            // 
+            this.buttonMMF.AutoSize = true;
+            this.flowLayoutPanel1.SetFlowBreak(this.buttonMMF, true);
+            this.buttonMMF.Location = new System.Drawing.Point(200, 3);
+            this.buttonMMF.Name = "buttonMMF";
+            this.buttonMMF.Size = new System.Drawing.Size(75, 23);
+            this.buttonMMF.TabIndex = 1;
+            this.buttonMMF.Text = "MMF IP";
+            this.buttonMMF.UseVisualStyleBackColor = true;
+            this.buttonMMF.Click += new System.EventHandler(this.buttonMMF_Click);
+            // 
+            // buttonGoogleIP
+            // 
+            this.buttonGoogleIP.AutoSize = true;
+            this.buttonGoogleIP.Location = new System.Drawing.Point(3, 32);
+            this.buttonGoogleIP.Name = "buttonGoogleIP";
+            this.buttonGoogleIP.Size = new System.Drawing.Size(171, 23);
+            this.buttonGoogleIP.TabIndex = 4;
+            this.buttonGoogleIP.Text = "google ip duan => GoogleIP";
+            this.buttonGoogleIP.UseVisualStyleBackColor = true;
+            this.buttonGoogleIP.Click += new System.EventHandler(this.buttonGoogleIP_Click);
+            // 
+            // buttonGoogleIPHunter
+            // 
+            this.buttonGoogleIPHunter.AutoSize = true;
+            this.buttonGoogleIPHunter.Location = new System.Drawing.Point(180, 32);
+            this.buttonGoogleIPHunter.Name = "buttonGoogleIPHunter";
+            this.buttonGoogleIPHunter.Size = new System.Drawing.Size(99, 23);
+            this.buttonGoogleIPHunter.TabIndex = 5;
+            this.buttonGoogleIPHunter.Text = "GoogleIPHunter";
+            this.buttonGoogleIPHunter.UseVisualStyleBackColor = true;
+            this.buttonGoogleIPHunter.Click += new System.EventHandler(this.buttonGoogleIPHunter_Click);
+            // 
+            // buttonIPv4DB
+            // 
+            this.buttonIPv4DB.Location = new System.Drawing.Point(285, 32);
+            this.buttonIPv4DB.Name = "buttonIPv4DB";
+            this.buttonIPv4DB.Size = new System.Drawing.Size(75, 23);
+            this.buttonIPv4DB.TabIndex = 6;
+            this.buttonIPv4DB.Text = "button1";
+            this.buttonIPv4DB.UseVisualStyleBackColor = true;
+            this.buttonIPv4DB.Click += new System.EventHandler(this.buttonIPv4DB_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -266,6 +298,7 @@
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -281,7 +314,7 @@
         private System.Windows.Forms.Button buttonMMF;
         private System.Windows.Forms.Label labelCount;
         private System.Windows.Forms.Button button更新;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonGoogleIP;
         private System.Windows.Forms.DataGridViewTextBoxColumn IP;
         private System.Windows.Forms.DataGridViewTextBoxColumn 延迟;
         private System.Windows.Forms.DataGridViewTextBoxColumn 类型;
@@ -289,6 +322,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 颁发给;
         private System.Windows.Forms.DataGridViewCheckBoxColumn 谷歌;
         private System.Windows.Forms.DataGridViewTextBoxColumn 归属地;
+        private System.Windows.Forms.Button buttonGoogleIPHunter;
+        private System.Windows.Forms.Button buttonIPv4DB;
     }
 }
 

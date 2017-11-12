@@ -236,16 +236,62 @@ Connection:Close
                 {
                     CodeSite.Send("IP", ip.IP);
                     Search.WebCheck(ip);
+                    Search.TcpCheck(ip);
                 }
                 db.SubmitChanges();
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonGoogleIP_Click(object sender, EventArgs e)
         {
-            using (IPv4DataContext db = new IPv4DataContext())
+            var sa = File.ReadAllLines("google ip duan.txt");
+            List<IPNetwork> netList = new List<IPNetwork>();
+            foreach (var s in sa)
+                try
+                {
+                    netList.Add(IPNetwork.Parse(s));
+                }
+                catch (Exception ex)
+                {
+                    CodeSite.SendException(s, ex);
+                }
+            //var netSuper = IPNetwork.Supernet(netList.ToArray());
+            //var q = netSuper.OrderBy(p => IPNetwork.ToBigInteger(p.Network)).Select(p => p.ToString());
+            netList.Sort();
+            File.WriteAllLines("GoogleIP.txt", netList.Select(p => p.ToString()));
+        }
+
+        private void buttonGoogleIPHunter_Click(object sender, EventArgs e)
+        {
+            var files = Directory.GetFiles(@"G:\DxgWork\GitHub\GoogleIPHunter\trunk", "*.txt", SearchOption.AllDirectories);
+            List<IPNetwork> all = new List<IPNetwork>();
+            foreach (var file in files)
             {
-                bindingSource1.DataSource = db.IPv4SSL.Where(f => f.Isgxs);
+                foreach (var s in File.ReadAllLines(file))
+                {
+                    try
+                    {
+                        all.Add(IPNetwork.Parse(s));
+                    }
+                    catch (Exception ex)
+                    {
+                        CodeSite.SendException(s, ex);
+                    }
+                }
+            }
+            all.Sort();
+            File.WriteAllLines("GoogleIPHunter.txt", all.Select(p => p.ToString()));
+        }
+
+        private void buttonIPv4DB_Click(object sender, EventArgs e)
+        {
+            CodeSite.SendCollection("0.255.255.255", IPv4DB.Find(IPAddress.Parse("0.255.255.255")));
+            Random r = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                int ip = r.Next(int.MinValue, int.MaxValue);
+                IPAddress ipa = ((uint)ip).ToIPAddress();
+                CodeSite.SendCollection(ipa.ToString(), IPv4DB.Find(ipa));
             }
         }
     }
