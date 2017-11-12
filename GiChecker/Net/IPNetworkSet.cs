@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.Serialization;
-using System.IO;
 using Raize.CodeSiteLogging;
+
 namespace GiChecker.Net
 {
-    class IPNetworkSet : SortedSet<IPNetwork>
+    public class IPNetworkSet : SortedSet<IPNetwork>
     {
         const string CIDRReserved = @"0.0.0.0/8 本网络（仅作为源地址时合法）
 10.0.0.0/8 专用网络

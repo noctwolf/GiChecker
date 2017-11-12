@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GiChecker.Net
 {
-    static class IPAddressExtension
+    public static class IPAddressExtension
     {
         public static uint ToUInt32(this IPAddress value)
         {

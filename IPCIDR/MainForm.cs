@@ -15,6 +15,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows.Forms;
+using GiChecker.Net;
 
 namespace IPCIDR
 {
@@ -212,21 +213,6 @@ namespace IPCIDR
                 CodeSite.SendCollection(ipa.ToString(), IPv4DB.Find(ipa.ToString()));
                 CodeSite.SendCollection(ipa.ToString(), IPv4DB.Find(ipa));
             }
-        }
-    }
-
-    static class IPAddressExtension
-    {
-        public static uint ToUInt32(this IPAddress value)
-        {
-            if (value.AddressFamily != AddressFamily.InterNetwork)
-                throw new SocketException((int)SocketError.OperationNotSupported);
-            return BitConverter.ToUInt32(value.GetAddressBytes().Reverse().ToArray(), 0);
-        }
-
-        public static IPAddress ToIPAddress(this uint value)
-        {
-            return new IPAddress(BitConverter.GetBytes(value).Reverse().ToArray());
         }
     }
 }
