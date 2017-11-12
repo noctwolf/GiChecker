@@ -79,6 +79,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TPL\Search.cs" />
+    <Compile Include="Upgrade\FromNew.cs" />
     <None Include="Database\IPv4.dbml.layout">
       <DependentUpon>IPv4.dbml</DependentUpon>
     </None>

@@ -13,6 +13,7 @@ namespace GiChecker
         [STAThread]
         static void Main()
         {
+            Upgrade.FromNew.Upgrade();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
