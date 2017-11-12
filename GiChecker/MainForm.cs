@@ -22,12 +22,6 @@ namespace GiChecker
 {
     public partial class MainForm : Form
     {
-        const string GoogleIssuer = "Google Internet Authority G2";
-        const string SslWrite = @"HEAD / HTTP/1.1
-Host:www.google.com
-Connection:Close
-
-";
         CancellationTokenSource cts;
         Task task;
 
@@ -36,116 +30,6 @@ Connection:Close
             InitializeComponent();
             FileInfo fi = new FileInfo("IPv4Reserved.txt");
             if (fi.Exists) IPNetworkSet.IPv4Reserved.Add(File.ReadAllText(fi.FullName, Encoding.Default));
-        }
-
-        private void buttonCheck_Click(object sender, EventArgs e)
-        {
-            Ping ping = new Ping();
-            foreach (var item in rtbIP.Text.Split(Environment.NewLine.ToArray(), StringSplitOptions.RemoveEmptyEntries))
-            {
-                CodeSite.Send("item", item);
-                IPAddress ia = IPAddress.Parse(item);
-                TcpClient tc = new TcpClient { ReceiveTimeout = 1000, SendTimeout = 1000 };
-                try
-                {
-                    PingReply pr = ping.Send(ia, 50);
-                    CodeSite.Send("RoundtripTime", pr.RoundtripTime);
-                    if (pr.Status == IPStatus.Success)
-                    {
-                        tc.Connect(ia, 443);
-                        SslStream ss = new SslStream(tc.GetStream(), false,
-                            (object sender1, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) =>
-                            {
-                                CodeSite.SendNote("X509Certificate");
-                                bool bOld = Encoding.UTF8.GetString(certificate.GetRawCertData()).IndexOf("google") != -1;
-                                CodeSite.Send("bOld", bOld);
-                                X509Certificate2 c2 = certificate as X509Certificate2;
-                                bool bNew = c2.GetNameInfo(X509NameType.SimpleName, true) == GoogleIssuer;// && c2.Verify();
-                                if (bOld && !bNew)
-                                {
-                                    CodeSite.Send("Verify", c2.Verify());
-                                    CodeSite.Send("Issuer.SimpleName", c2.GetNameInfo(X509NameType.SimpleName, true));
-                                    CodeSite.Send("Subject.SimpleName", c2.GetNameInfo(X509NameType.SimpleName, false));
-                                }
-                                CodeSite.Send("bNew", bNew);
-                                return bNew;
-                            });
-                        ss.AuthenticateAsClient("");
-                        StreamReader sr = new StreamReader(ss);
-                        StreamWriter sw = new StreamWriter(ss);
-                        sw.Write(SslWrite);
-                        sw.Flush();
-                        string s = sr.ReadToEnd();
-                        CodeSite.Send("s", s);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    CodeSite.SendException("ex", ex);
-                }
-                finally
-                {
-                    tc.Close();
-                }
-            }
-        }
-
-        private void buttonHttp_Click(object sender, EventArgs e)
-        {
-            HttpClient hc = new HttpClient(new WebRequestHandler()
-            {
-                AllowAutoRedirect = false,
-                ServerCertificateValidationCallback = (object sender1, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) =>
-                {
-                    CodeSite.SendNote("X509Certificate");
-                    bool bOld = Encoding.UTF8.GetString(certificate.GetRawCertData()).IndexOf("google") != -1;
-                    X509Certificate2 c2 = certificate as X509Certificate2;
-                    bool bNew = c2.GetNameInfo(X509NameType.SimpleName, true) == GoogleIssuer;// && c2.Verify();
-                    if (bOld && !bNew)
-                    {
-                        CodeSite.Send("Verify", c2.Verify());
-                        CodeSite.Send("Issuer.SimpleName", c2.GetNameInfo(X509NameType.SimpleName, true));
-                        CodeSite.Send("Subject.SimpleName", c2.GetNameInfo(X509NameType.SimpleName, false));
-                    }
-                    CodeSite.Send("bNew", bNew);
-                    return bNew;
-                }
-            })
-            {
-                Timeout = TimeSpan.FromMilliseconds(3000),
-                DefaultRequestHeaders =
-                {
-                    ConnectionClose = true
-                }
-            };
-            Ping ping = new Ping();
-            foreach (var item in rtbIP.Text.Split(Environment.NewLine.ToArray(), StringSplitOptions.RemoveEmptyEntries))
-            {
-                try
-                {
-                    CodeSite.Send("item", item);
-                    IPAddress ia = IPAddress.Parse(item);
-                    PingReply pr = ping.Send(ia, 200);
-                    CodeSite.Send("RoundtripTime", pr.RoundtripTime);
-                    CodeSite.Send("Status", pr.Status);
-                    if (pr.Status == IPStatus.Success)
-                    {
-                        HttpRequestMessage head = new HttpRequestMessage()
-                        {
-                            Method = HttpMethod.Head,
-                            RequestUri = new Uri(string.Format("https://{0}", item))
-                        };
-                        HttpResponseMessage hrm = hc.SendAsync(head).Result;
-                        CodeSite.Send("hrm", hrm);
-                        head.Dispose();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    CodeSite.SendException("ex", ex);
-                }
-            }
-            hc.Dispose();
         }
 
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)

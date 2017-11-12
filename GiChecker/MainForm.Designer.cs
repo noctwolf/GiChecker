@@ -29,10 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.rtbIP = new System.Windows.Forms.RichTextBox();
-            this.buttonCheck = new System.Windows.Forms.Button();
-            this.buttonHttp = new System.Windows.Forms.Button();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.延迟 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,36 +51,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // rtbIP
-            // 
-            this.rtbIP.Location = new System.Drawing.Point(0, 30);
-            this.rtbIP.Name = "rtbIP";
-            this.rtbIP.Size = new System.Drawing.Size(100, 381);
-            this.rtbIP.TabIndex = 0;
-            this.rtbIP.Text = "119.28.84.182\n188.43.64.60\n188.43.64.62\n188.43.64.61\n179.5.71.184\n179.5.71.151\n17" +
-    "9.5.71.158\n179.5.71.140\n179.5.71.144\n179.5.71.156\n179.5.71.172\n179.5.71.142\n179." +
-    "5.71.185";
-            // 
-            // buttonCheck
-            // 
-            this.buttonCheck.Location = new System.Drawing.Point(9, 237);
-            this.buttonCheck.Name = "buttonCheck";
-            this.buttonCheck.Size = new System.Drawing.Size(75, 23);
-            this.buttonCheck.TabIndex = 1;
-            this.buttonCheck.Text = "Check";
-            this.buttonCheck.UseVisualStyleBackColor = true;
-            this.buttonCheck.Click += new System.EventHandler(this.buttonCheck_Click);
-            // 
-            // buttonHttp
-            // 
-            this.buttonHttp.Location = new System.Drawing.Point(9, 266);
-            this.buttonHttp.Name = "buttonHttp";
-            this.buttonHttp.Size = new System.Drawing.Size(75, 23);
-            this.buttonHttp.TabIndex = 2;
-            this.buttonHttp.Text = "HttpClient";
-            this.buttonHttp.UseVisualStyleBackColor = true;
-            this.buttonHttp.Click += new System.EventHandler(this.buttonHttp_Click);
             // 
             // dataGridView1
             // 
@@ -128,8 +95,8 @@
             // 延迟
             // 
             this.延迟.DataPropertyName = "RoundtripTime";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.延迟.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.延迟.DefaultCellStyle = dataGridViewCellStyle2;
             this.延迟.FillWeight = 50F;
             this.延迟.HeaderText = "延迟";
             this.延迟.MinimumWidth = 50;
@@ -275,7 +242,7 @@
             this.buttonIPv4DB.Name = "buttonIPv4DB";
             this.buttonIPv4DB.Size = new System.Drawing.Size(75, 23);
             this.buttonIPv4DB.TabIndex = 6;
-            this.buttonIPv4DB.Text = "button1";
+            this.buttonIPv4DB.Text = "IPv4DB";
             this.buttonIPv4DB.UseVisualStyleBackColor = true;
             this.buttonIPv4DB.Click += new System.EventHandler(this.buttonIPv4DB_Click);
             // 
@@ -286,9 +253,6 @@
             this.ClientSize = new System.Drawing.Size(784, 411);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.rtbIP);
-            this.Controls.Add(this.buttonHttp);
-            this.Controls.Add(this.buttonCheck);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GiChecker";
@@ -304,9 +268,6 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox rtbIP;
-        private System.Windows.Forms.Button buttonCheck;
-        private System.Windows.Forms.Button buttonHttp;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
