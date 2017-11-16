@@ -114,33 +114,36 @@ namespace GiChecker.TPL
             TcpClient tcpClient = new TcpClient { ReceiveTimeout = 1000, SendTimeout = 1000 };
             try
             {
-                PingReply pingReply = new Ping().Send(value, 1000);
-                if (pingReply.Status == IPStatus.Success)
+                using (Ping ping = new Ping())
                 {
-                    tcpClient.Connect(value, 443);
-                    SslStream sslStream = new SslStream(tcpClient.GetStream(), false,
-                        (sender, certificate, chain, sslPolicyErrors) =>
-                            Encoding.UTF8.GetString(certificate.GetRawCertData()).IndexOf("google") != -1);
-                    sslStream.AuthenticateAsClient("");
-                    StreamReader streamReader = new StreamReader(sslStream);
-                    StreamWriter streamWriter = new StreamWriter(sslStream);
-                    streamWriter.Write("HEAD / HTTP/1.1\r\nHost:www.google.com\r\nConnection:Close\r\n\r\n");
-                    streamWriter.Flush();
-                    string text = streamReader.ReadToEnd();
-                    CodeSite.Send("text", text);
-                    tcpClient.Close();
-                    object[] array = new object[8];
-                    if (text.IndexOf("Server: gvs 1.0") != -1)
-                        array[2] = "GVS";
-                    else if (text.IndexOf("Server: gws") != -1)
-                        array[2] = "gws";
+                    PingReply pingReply = ping.Send(value, 1000);
+                    if (pingReply.Status == IPStatus.Success)
+                    {
+                        tcpClient.Connect(value, 443);
+                        SslStream sslStream = new SslStream(tcpClient.GetStream(), false,
+                            (sender, certificate, chain, sslPolicyErrors) =>
+                                Encoding.UTF8.GetString(certificate.GetRawCertData()).IndexOf("google") != -1);
+                        sslStream.AuthenticateAsClient("");
+                        StreamReader streamReader = new StreamReader(sslStream);
+                        StreamWriter streamWriter = new StreamWriter(sslStream);
+                        streamWriter.Write("HEAD / HTTP/1.1\r\nHost:www.google.com\r\nConnection:Close\r\n\r\n");
+                        streamWriter.Flush();
+                        string text = streamReader.ReadToEnd();
+                        CodeSite.Send("text", text);
+                        tcpClient.Close();
+                        object[] array = new object[8];
+                        if (text.IndexOf("Server: gvs 1.0") != -1)
+                            array[2] = "GVS";
+                        else if (text.IndexOf("Server: gws") != -1)
+                            array[2] = "gws";
 
-                    string text2 = sslStream.RemoteCertificate.Subject.Split(new char[] { ',' })[0].Substring(3);
-                    array[0] = value.ToString();
-                    array[1] = "_OK " + pingReply.RoundtripTime.ToString().PadLeft(4, '0');
-                    array[3] = text2;
-                    array[4] = "001";
-                    array[5] = "";
+                        string text2 = sslStream.RemoteCertificate.Subject.Split(new char[] { ',' })[0].Substring(3);
+                        array[0] = value.ToString();
+                        array[1] = "_OK " + pingReply.RoundtripTime.ToString().PadLeft(4, '0');
+                        array[3] = text2;
+                        array[4] = "001";
+                        array[5] = "";
+                    }
                 }
             }
             catch (Exception ex)
