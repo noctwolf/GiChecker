@@ -12,12 +12,6 @@ namespace GiChecker.Database
 
         public bool IsGoogle { get { return Issuer == GoogleIssuer; } }
 
-        partial void OnAddressChanged()
-        {
-            IP = ((uint)Address).ToIPAddress().ToString();
-            Location = IPv4DB.Find(IP)[1];
-        }
-
         partial void OnServerChanged()
         {
             CodeSite.EnterMethod(this, "OnServerChanged");
@@ -41,6 +35,8 @@ namespace GiChecker.Database
         {
             Address = (int)address;
             RoundtripTime = (int)roundtripTime;
+            IP = ((uint)Address).ToIPAddress().ToString();
+            Location = IPv4DB.Find(IP)[1];
         }
     }
 }
