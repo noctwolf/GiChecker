@@ -178,5 +178,15 @@ namespace GiChecker
                 CodeSite.SendCollection(ipa.ToString(), IPv4DB.Find(ipa));
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            IPv4SSL ip = new IPv4SSL(IPAddress.Parse("111.13.101.208").ToUInt32(), -1);
+            Search.WebCheck(ip);
+            CodeSite.Send("ip", ip);
+            ip = new IPv4SSL(IPAddress.Parse("111.13.101.208").ToUInt32(), -1);
+            Search.TcpCheck(ip);
+            CodeSite.Send("ip", ip);
+        }
     }
 }

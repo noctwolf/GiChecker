@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.延迟 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,6 +47,7 @@
             this.buttonGoogleIP = new System.Windows.Forms.Button();
             this.buttonGoogleIPHunter = new System.Windows.Forms.Button();
             this.buttonIPv4DB = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -95,8 +96,8 @@
             // 延迟
             // 
             this.延迟.DataPropertyName = "RoundtripTime";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.延迟.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.延迟.DefaultCellStyle = dataGridViewCellStyle1;
             this.延迟.FillWeight = 50F;
             this.延迟.HeaderText = "延迟";
             this.延迟.MinimumWidth = 50;
@@ -162,6 +163,7 @@
             this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIP);
             this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIPHunter);
             this.flowLayoutPanel1.Controls.Add(this.buttonIPv4DB);
+            this.flowLayoutPanel1.Controls.Add(this.button1);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -246,6 +248,16 @@
             this.buttonIPv4DB.UseVisualStyleBackColor = true;
             this.buttonIPv4DB.Click += new System.EventHandler(this.buttonIPv4DB_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(366, 32);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -285,6 +297,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 归属地;
         private System.Windows.Forms.Button buttonGoogleIPHunter;
         private System.Windows.Forms.Button buttonIPv4DB;
+        private System.Windows.Forms.Button button1;
     }
 }
 
