@@ -75,9 +75,9 @@ namespace GiChecker.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool OnlyReserved {
+        public bool IPv4Assigned {
             get {
-                return ((bool)(this["OnlyReserved"]));
+                return ((bool)(this["IPv4Assigned"]));
             }
         }
     }

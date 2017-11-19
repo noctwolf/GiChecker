@@ -215,7 +215,7 @@ namespace GiChecker.TPL
             WebCheck(ip);
             if (ip.RoundtripTime != -1)
             {
-                if (Properties.Settings.Default.OnlyReserved) CodeSite.Send("IP", ip.IP);
+                if (Properties.Settings.Default.IPv4Assigned) CodeSite.Send("IP", ip.IP);
                 IPStack.Push(ip);
             }
             return ip.RoundtripTime != -1;
@@ -325,7 +325,8 @@ namespace GiChecker.TPL
                     {
                         if (ctWeb.IsCancellationRequested) break;
                         uint uip = i << 8;
-                        if (!IPNetworkSet.IPv4Reserved.Contains(uip) ^ Properties.Settings.Default.OnlyReserved) for (uint j = 0; j < 256; j++) IPSet.Add(uip + j);
+                        if (!IPNetworkSet.IPv4Reserved.Contains(uip) && !IPNetworkSet.IPv4Assigned.Contains(uip) ^ Properties.Settings.Default.IPv4Assigned)
+                            for (uint j = 0; j < 256; j++) IPSet.Add(uip + j);
                         if (i % count == count - 1)//每组
                         {
                             if (IPSet.Count > 0)

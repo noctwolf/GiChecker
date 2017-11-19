@@ -9,7 +9,7 @@ namespace GiChecker.Net
 {
     public class IPNetworkSet : SortedSet<IPNetwork>
     {
-        const string CIDRReserved = @"0.0.0.0/8 本网络（仅作为源地址时合法）
+        const string Reserved = @"0.0.0.0/8 本网络（仅作为源地址时合法）
 10.0.0.0/8 专用网络
 100.64.0.0/10 地址共享
 127.0.0.0/8 环回
@@ -24,10 +24,11 @@ namespace GiChecker.Net
 203.0.113.0/24 TEST-NET-3
 224.0.0.0/3 D类网络和E类网络";
         public static readonly IPNetworkSet IPv4Reserved = new IPNetworkSet();
+        public static readonly IPNetworkSet IPv4Assigned = new IPNetworkSet();
 
         static IPNetworkSet()
         {
-            IPv4Reserved.Add(CIDRReserved);
+            IPv4Reserved.Add(Reserved);
         }
 
         public IPNetworkSet()
@@ -77,7 +78,6 @@ namespace GiChecker.Net
                     CodeSite.SendException(ip, ex);
                 }
             }
-
         }
 
         public bool Contains(IPAddress ipaddress)

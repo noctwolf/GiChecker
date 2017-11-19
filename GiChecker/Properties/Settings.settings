@@ -22,7 +22,7 @@
     <Setting Name="GoogleIPHunter" Type="System.String" Scope="Application">
       <Value Profile="(Default)">GoogleIPHunter.txt</Value>
     </Setting>
-    <Setting Name="OnlyReserved" Type="System.Boolean" Scope="Application">
+    <Setting Name="IPv4Assigned" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

@@ -28,8 +28,8 @@ namespace GiChecker
         public MainForm()
         {
             InitializeComponent();
-            FileInfo fi = new FileInfo("IPv4Reserved.txt");
-            if (fi.Exists) IPNetworkSet.IPv4Reserved.Add(File.ReadAllText(fi.FullName, Encoding.Default));
+            FileInfo fi = new FileInfo("IPv4Assigned.txt");
+            if (fi.Exists) IPNetworkSet.IPv4Assigned.Add(File.ReadAllText(fi.FullName, Encoding.Default));
         }
 
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
