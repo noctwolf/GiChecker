@@ -226,7 +226,7 @@ namespace GiChecker.TPL
             using (IPv4DataContext db = new IPv4DataContext())
             {
                 var listDB = (from item in db.IPv4SSL
-                              where item.Address >= (int)IPSet.Min && item.Address <= (int)IPSet.Max
+                              where item.Address >= IPSet.Min && item.Address <= IPSet.Max
                               select item.Address).ToList().Select(p => (uint)p);
                 finishCount = IPSet.Count;
                 IPSet.ExceptWith(listDB);

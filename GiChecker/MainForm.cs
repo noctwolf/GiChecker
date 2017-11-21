@@ -28,8 +28,8 @@ namespace GiChecker
         public MainForm()
         {
             InitializeComponent();
-            FileInfo fi = new FileInfo("IPv4Assigned.txt");
-            if (fi.Exists) IPNetworkSet.IPv4Assigned.Add(File.ReadAllText(fi.FullName, Encoding.Default));
+            IPv4DataContext db = new IPv4DataContext();
+            IPNetworkSet.IPv4Assigned.Add(string.Join(Environment.NewLine, db.IPv4Assigned.Select(f => f.IPBlock)));
         }
 
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
@@ -94,7 +94,7 @@ namespace GiChecker
             using (IPv4DataContext db = new IPv4DataContext())
             {
                 var q = from item in db.IPv4SSL
-                        where item.Server == "gws"
+                        where item.Isgxs && item.Server == "gws"
                         select item.Address;
                 var list = q.ToList().Select(f => (uint)f >> 8).Distinct().OrderBy(f => f).Select(f => string.Format("{0}/24", (f << 8).ToIPAddress()));
                 string filename = string.Format("{0}{1}.txt", Properties.Settings.Default.MMFPath, Path.GetFileNameWithoutExtension(Application.ExecutablePath));

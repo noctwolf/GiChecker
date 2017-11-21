@@ -33,6 +33,9 @@ namespace GiChecker.Database
     partial void InsertIPv4SSL(IPv4SSL instance);
     partial void UpdateIPv4SSL(IPv4SSL instance);
     partial void DeleteIPv4SSL(IPv4SSL instance);
+    partial void InsertIPv4Assigned(IPv4Assigned instance);
+    partial void UpdateIPv4Assigned(IPv4Assigned instance);
+    partial void DeleteIPv4Assigned(IPv4Assigned instance);
     #endregion
 		
 		public IPv4DataContext() : 
@@ -72,6 +75,14 @@ namespace GiChecker.Database
 				return this.GetTable<IPv4SSL>();
 			}
 		}
+		
+		public System.Data.Linq.Table<IPv4Assigned> IPv4Assigned
+		{
+			get
+			{
+				return this.GetTable<IPv4Assigned>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IPv4SSL")]
@@ -80,7 +91,7 @@ namespace GiChecker.Database
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _Address;
+		private long _Address;
 		
 		private string _IP;
 		
@@ -104,7 +115,7 @@ namespace GiChecker.Database
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnAddressChanging(int value);
+    partial void OnAddressChanging(long value);
     partial void OnAddressChanged();
     partial void OnIPChanging(string value);
     partial void OnIPChanged();
@@ -131,8 +142,8 @@ namespace GiChecker.Database
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Address
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long Address
 		{
 			get
 			{
@@ -311,7 +322,7 @@ namespace GiChecker.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateTime", DbType="DateTime2 NOT NULL", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateTime", DbType="DateTime2 NOT NULL")]
 		public System.DateTime UpdateTime
 		{
 			get
@@ -327,6 +338,116 @@ namespace GiChecker.Database
 					this._UpdateTime = value;
 					this.SendPropertyChanged("UpdateTime");
 					this.OnUpdateTimeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IPv4Assigned")]
+	public partial class IPv4Assigned : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _Address;
+		
+		private string _IPBlock;
+		
+		private string _Organization;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAddressChanging(long value);
+    partial void OnAddressChanged();
+    partial void OnIPBlockChanging(string value);
+    partial void OnIPBlockChanged();
+    partial void OnOrganizationChanging(string value);
+    partial void OnOrganizationChanged();
+    #endregion
+		
+		public IPv4Assigned()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IPBlock", DbType="VarChar(18) NOT NULL", CanBeNull=false)]
+		public string IPBlock
+		{
+			get
+			{
+				return this._IPBlock;
+			}
+			set
+			{
+				if ((this._IPBlock != value))
+				{
+					this.OnIPBlockChanging(value);
+					this.SendPropertyChanging();
+					this._IPBlock = value;
+					this.SendPropertyChanged("IPBlock");
+					this.OnIPBlockChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Organization", DbType="VarChar(256) NOT NULL", CanBeNull=false)]
+		public string Organization
+		{
+			get
+			{
+				return this._Organization;
+			}
+			set
+			{
+				if ((this._Organization != value))
+				{
+					this.OnOrganizationChanging(value);
+					this.SendPropertyChanging();
+					this._Organization = value;
+					this.SendPropertyChanged("Organization");
+					this.OnOrganizationChanged();
 				}
 			}
 		}

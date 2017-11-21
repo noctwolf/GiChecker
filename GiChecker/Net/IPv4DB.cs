@@ -31,6 +31,11 @@ namespace GiChecker.Net
             {
                 return IP.CompareTo(other.IP);
             }
+
+            public override string ToString()
+            {
+                return string.Format("{0}-{1}", IP.ToIPAddress(), Offset);
+            }
         }
 
         static readonly List<IPRang> listIP = new List<IPRang>();
@@ -72,16 +77,21 @@ namespace GiChecker.Net
                 };
 
             int indexLength = ToInt32(0, true);
+            List<IPRang> list = new List<IPRang>();
             for (int i = 1028; i < indexLength - 1024; i += 8)
             {
                 uint uip = (uint)ToInt32(i, true);
                 int offset = ToInt32(i + 4, false);
                 int len = offset >> 24;
                 offset &= 0xFFFFFF;
-                listIP.Add(new IPRang(uip, offset));
+                list.Add(new IPRang(uip, offset));
                 if (!dictArea.ContainsKey(offset))
                     dictArea[offset] = Encoding.UTF8.GetString(data, indexLength - 1024 + offset, len);
             }
+            //压缩
+            listIP.Clear();
+            for (int i = 0; i < list.Count - 2; i++) if (list[i].Offset != list[i + 1].Offset) listIP.Add(list[i]);
+            listIP.Add(list.Last());
         }
     }
 }
