@@ -11,7 +11,7 @@
       <Column Name="Isgxs" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Speed" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Location" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="UpdateTime" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateTime" AutoSync="Never" Type="System.DateTime" DbType="DateTime2 NOT NULL" IsDbGenerated="true" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.IPv4Assigned" Member="IPv4Assigned">

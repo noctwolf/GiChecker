@@ -175,6 +175,8 @@ namespace GiChecker.TPL
                             if (certificate == null) return false;
                             ip.Issuer = ((X509Certificate2)certificate).GetNameInfo(X509NameType.SimpleName, true);
                             ip.Subject = ((X509Certificate2)certificate).GetNameInfo(X509NameType.SimpleName, false);
+                            if (ip.Issuer.Length > 256) { CodeSite.Send(ip.IP + ip.Issuer, ip.Issuer.Length); ip.Issuer = ip.Issuer.Substring(0, 256); }
+                            if (ip.Subject.Length > 256) { CodeSite.Send(ip.IP + ip.Subject, ip.Subject.Length); ip.Subject = ip.Subject.Substring(0, 256); }
                             if (ip.IsGoogle) CodeSite.Send("IP", value.ToString());
                             certificate.Dispose();
                             return ip.IsGoogle;

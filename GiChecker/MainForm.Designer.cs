@@ -48,6 +48,7 @@
             this.buttonGoogleIPHunter = new System.Windows.Forms.Button();
             this.buttonIPv4DB = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.ucFormAlign1 = new GiChecker.UC.UCFormAlign();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -156,6 +157,7 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.Controls.Add(this.ucFormAlign1);
             this.flowLayoutPanel1.Controls.Add(this.button扫描全球);
             this.flowLayoutPanel1.Controls.Add(this.labelCount);
             this.flowLayoutPanel1.Controls.Add(this.button更新);
@@ -173,7 +175,7 @@
             // button扫描全球
             // 
             this.button扫描全球.AutoSize = true;
-            this.button扫描全球.Location = new System.Drawing.Point(3, 3);
+            this.button扫描全球.Location = new System.Drawing.Point(32, 3);
             this.button扫描全球.Name = "button扫描全球";
             this.button扫描全球.Size = new System.Drawing.Size(75, 23);
             this.button扫描全球.TabIndex = 0;
@@ -185,7 +187,7 @@
             // 
             this.labelCount.AutoSize = true;
             this.labelCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelCount.Location = new System.Drawing.Point(84, 3);
+            this.labelCount.Location = new System.Drawing.Point(113, 3);
             this.labelCount.Margin = new System.Windows.Forms.Padding(3);
             this.labelCount.Name = "labelCount";
             this.labelCount.Size = new System.Drawing.Size(29, 23);
@@ -196,7 +198,7 @@
             // button更新
             // 
             this.button更新.AutoSize = true;
-            this.button更新.Location = new System.Drawing.Point(119, 3);
+            this.button更新.Location = new System.Drawing.Point(148, 3);
             this.button更新.Name = "button更新";
             this.button更新.Size = new System.Drawing.Size(75, 23);
             this.button更新.TabIndex = 3;
@@ -208,7 +210,7 @@
             // 
             this.buttonMMF.AutoSize = true;
             this.flowLayoutPanel1.SetFlowBreak(this.buttonMMF, true);
-            this.buttonMMF.Location = new System.Drawing.Point(200, 3);
+            this.buttonMMF.Location = new System.Drawing.Point(229, 3);
             this.buttonMMF.Name = "buttonMMF";
             this.buttonMMF.Size = new System.Drawing.Size(75, 23);
             this.buttonMMF.TabIndex = 1;
@@ -258,6 +260,13 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // ucFormAlign1
+            // 
+            this.ucFormAlign1.Location = new System.Drawing.Point(3, 3);
+            this.ucFormAlign1.Name = "ucFormAlign1";
+            this.ucFormAlign1.Size = new System.Drawing.Size(23, 23);
+            this.ucFormAlign1.TabIndex = 8;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -298,6 +307,7 @@
         private System.Windows.Forms.Button buttonGoogleIPHunter;
         private System.Windows.Forms.Button buttonIPv4DB;
         private System.Windows.Forms.Button button1;
+        private UC.UCFormAlign ucFormAlign1;
     }
 }
 

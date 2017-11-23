@@ -322,7 +322,7 @@ namespace GiChecker.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateTime", DbType="DateTime2 NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateTime", DbType="DateTime2 NOT NULL", IsDbGenerated=true)]
 		public System.DateTime UpdateTime
 		{
 			get
