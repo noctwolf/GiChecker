@@ -96,18 +96,36 @@ namespace GiChecker
                 var q = from item in db.IPv4SSL
                         where item.Isgxs && item.Server == "gws"
                         select item.Address;
-                var list = q.ToList().Select(f => (uint)f >> 8).Distinct().OrderBy(f => f).Select(f => string.Format("{0}/24", (f << 8).ToIPAddress()));
+                //var list = q.ToList().Select(f => (uint)f >> 8).Distinct().OrderBy(f => f).Select(f => string.Format("{0}/24", (f << 8).ToIPAddress()));
+                var list = from item in q.ToList()
+                           orderby item
+                           group item by string.Format("{0}/24", ((uint)item & 0xFFFFFF00).ToIPAddress());
+                //q.ToList().Select(f => (uint)f >> 8).Distinct().OrderBy(f => f).Select(f => string.Format("{0}/24", (f << 8).ToIPAddress()));
                 string filename = string.Format("{0}{1}.txt", Properties.Settings.Default.MMFPath, Path.GetFileNameWithoutExtension(Application.ExecutablePath));
-                SaveFile(filename, list);
+                SaveFile(filename, list.Select(f => f.Key));
+                IEnumerable<string> publicList = "".Split(' ');
                 filename = string.Format("{0}{1}", Properties.Settings.Default.MMFPath, Properties.Settings.Default.GoogleIP);
-                if (File.Exists(filename))
+                if (File.Exists(filename)) publicList = publicList.Union(File.ReadAllLines(filename));
+                filename = string.Format("{0}{1}", Properties.Settings.Default.MMFPath, Properties.Settings.Default.GoogleIPHunter);
+                if (File.Exists(filename)) publicList = publicList.Union(File.ReadAllLines(filename));
+                if (publicList.Count() > 0)
                 {
-                    list = list.Except(File.ReadAllLines(filename));
-                    filename = string.Format("{0}{1}", Properties.Settings.Default.MMFPath, Properties.Settings.Default.GoogleIPHunter);
-                    if (File.Exists(filename))
-                        list = list.Except(File.ReadAllLines(filename));
+                    //list = list.Except(File.ReadAllLines(filename));
+                    var p = from itemg in list
+                            join itemp in publicList on itemg.Key equals itemp into g
+                            from item in g.DefaultIfEmpty()
+                            where string.IsNullOrWhiteSpace(item)
+                            select itemg;
+                    list = p.ToList();
                     filename = string.Format("{0}{1}.Except.txt", Properties.Settings.Default.MMFPath, Path.GetFileNameWithoutExtension(Application.ExecutablePath));
-                    SaveFile(filename, list);
+                    SaveFile(filename, list.Select(f => f.Key));
+
+                    list = from item in list.SelectMany(f => f)
+                           orderby item
+                           group item by string.Format("{0}/8", ((uint)item & 0xFF000000).ToIPAddress());
+                    var ip = from item in list
+                             select string.Join(",", from a in item select string.Format(@"""{0}""", ((uint)a).ToIPAddress())) + ",";
+                    SaveFile("gae.user.txt", ip);
                 }
             }
         }
