@@ -213,7 +213,7 @@ namespace GiChecker.TPL
 
         bool WebCheck(uint value)
         {
-            IPv4SSL ip = new IPv4SSL(value, -1);
+            IPv4SSL ip = new IPv4SSL(value);
             WebCheck(ip);
             if (ip.RoundtripTime != -1)
             {

@@ -31,12 +31,12 @@ namespace GiChecker.Database
             }
         }
 
-        public IPv4SSL(uint address, int roundtripTime)
+        public IPv4SSL(uint address)
         {
             Address = address;
-            RoundtripTime = roundtripTime;
             IP = address.ToIPAddress().ToString();
             Location = IPv4DB.Find(IP)[0];
+            PropertyChanged += (sender, e) => { if (e.PropertyName != "UpdateTime") UpdateTime = DateTime.Now; };
         }
     }
 }
