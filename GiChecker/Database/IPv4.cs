@@ -35,7 +35,8 @@ namespace GiChecker.Database
         {
             Address = address;
             IP = address.ToIPAddress().ToString();
-            Location = IPv4DB.Find(IP)[0];
+            RoundtripTime = -1;
+            Location = IPv4Location.Find(IP)[0];
             PropertyChanged += (sender, e) => { if (e.PropertyName != "UpdateTime") UpdateTime = DateTime.Now; };
         }
     }

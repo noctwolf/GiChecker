@@ -7,7 +7,7 @@ using System.Net;
 
 namespace GiChecker.Net
 {
-    public static class IPv4DB
+    public static class IPv4Location
     {
         //private static void Main(string[] args)
         //{
@@ -59,7 +59,7 @@ namespace GiChecker.Net
             return dictArea[listIP[i].Offset].Split('\t');
         }
 
-        static IPv4DB()
+        static IPv4Location()
         {
             const string fn = "17monipdb.dat";
             if (File.Exists(fn)) Load(fn);

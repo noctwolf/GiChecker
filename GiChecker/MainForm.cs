@@ -187,13 +187,13 @@ namespace GiChecker
 
         private void buttonIPv4DB_Click(object sender, EventArgs e)
         {
-            CodeSite.SendCollection("0.255.255.255", IPv4DB.Find(IPAddress.Parse("0.255.255.255")));
+            CodeSite.SendCollection("0.255.255.255", IPv4Location.Find(IPAddress.Parse("0.255.255.255")));
             Random r = new Random();
             for (int i = 0; i < 10; i++)
             {
                 int ip = r.Next(int.MinValue, int.MaxValue);
                 IPAddress ipa = ((uint)ip).ToIPAddress();
-                CodeSite.SendCollection(ipa.ToString(), IPv4DB.Find(ipa));
+                CodeSite.SendCollection(ipa.ToString(), IPv4Location.Find(ipa));
             }
         }
 
