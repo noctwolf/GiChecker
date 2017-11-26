@@ -69,7 +69,7 @@ namespace GiChecker.TPL
                 ctsSave = new CancellationTokenSource();
                 taskSave = Task.Factory.StartNew(() =>
                 {
-                    IPv4SSL[] ipa = new IPv4SSL[1000];
+                    IPv4SSL[] ipa = new IPv4SSL[100];
                     int c;
                     while (!ctsSave.IsCancellationRequested || !IPStack.IsEmpty)
                     {
