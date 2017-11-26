@@ -28,8 +28,10 @@ namespace GiChecker
         public MainForm()
         {
             InitializeComponent();
-            IPv4DataContext db = new IPv4DataContext();
-            IPNetworkSet.IPv4Assigned.Add(string.Join(Environment.NewLine, db.IPv4Assigned.Select(f => f.IPBlock)));
+            using (IPv4DataContext db = new IPv4DataContext())
+            {
+                IPNetworkSet.IPv4Assigned.Add(string.Join(Environment.NewLine, db.IPv4Assigned.Select(f => f.IPBlock)));
+            }
         }
 
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
