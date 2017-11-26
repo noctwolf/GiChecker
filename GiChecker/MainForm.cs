@@ -98,21 +98,14 @@ namespace GiChecker
                 var q = from item in db.IPv4SSL
                         where item.Isgxs && item.Server == "gws"
                         select item.Address;
-                //var list = q.ToList().Select(f => (uint)f >> 8).Distinct().OrderBy(f => f).Select(f => string.Format("{0}/24", (f << 8).ToIPAddress()));
                 var list = from item in q.ToList()
                            orderby item
                            group item by string.Format("{0}/24", ((uint)item & 0xFFFFFF00).ToIPAddress());
-                //q.ToList().Select(f => (uint)f >> 8).Distinct().OrderBy(f => f).Select(f => string.Format("{0}/24", (f << 8).ToIPAddress()));
                 string filename = string.Format("{0}{1}.txt", Properties.Settings.Default.MMFPath, Path.GetFileNameWithoutExtension(Application.ExecutablePath));
                 SaveFile(filename, list.Select(f => f.Key));
-                IEnumerable<string> publicList = "".Split(' ');
-                filename = string.Format("{0}{1}", Properties.Settings.Default.MMFPath, Properties.Settings.Default.GoogleIP);
-                if (File.Exists(filename)) publicList = publicList.Union(File.ReadAllLines(filename));
-                filename = string.Format("{0}{1}", Properties.Settings.Default.MMFPath, Properties.Settings.Default.GoogleIPHunter);
-                if (File.Exists(filename)) publicList = publicList.Union(File.ReadAllLines(filename));
+                var publicList = db.GoogleIPDuan.Select(f => f.IPBlock).Union(db.GoogleIPHunter.Select(f=>f.IPBlock));
                 if (publicList.Count() > 0)
                 {
-                    //list = list.Except(File.ReadAllLines(filename));
                     var p = from itemg in list
                             join itemp in publicList on itemg.Key equals itemp into g
                             from item in g.DefaultIfEmpty()
@@ -149,42 +142,66 @@ namespace GiChecker
         private void buttonGoogleIP_Click(object sender, EventArgs e)
         {
             var sa = File.ReadAllLines("google ip duan.txt");
-            List<IPNetwork> netList = new List<IPNetwork>();
-            foreach (var s in sa)
-                try
-                {
-                    netList.Add(IPNetwork.Parse(s));
-                }
-                catch (Exception ex)
-                {
-                    CodeSite.SendException(s, ex);
-                }
-            //var netSuper = IPNetwork.Supernet(netList.ToArray());
-            //var q = netSuper.OrderBy(p => IPNetwork.ToBigInteger(p.Network)).Select(p => p.ToString());
-            netList.Sort();
-            File.WriteAllLines("GoogleIP.txt", netList.Select(p => p.ToString()));
-        }
-
-        private void buttonGoogleIPHunter_Click(object sender, EventArgs e)
-        {
-            var files = Directory.GetFiles(@"G:\DxgWork\GitHub\GoogleIPHunter\trunk", "*.txt", SearchOption.AllDirectories);
-            List<IPNetwork> all = new List<IPNetwork>();
-            foreach (var file in files)
+            using (IPv4DataContext db = new IPv4DataContext())
             {
-                foreach (var s in File.ReadAllLines(file))
+                var list = db.GoogleIPDuan.ToList().Select(f => (uint)f.Address);
+                foreach (var s in sa)
                 {
                     try
                     {
-                        all.Add(IPNetwork.Parse(s));
+                        IPNetwork network = IPNetwork.Parse(s);
+                        if (network.ToString() == s)
+                        {
+                            uint address = network.Network.ToUInt32();
+                            if (!list.Contains(address))
+                            {
+                                db.GoogleIPDuan.InsertOnSubmit(new GoogleIPDuan() { Address = address, IPBlock = s });
+                                CodeSite.SendNote("新增 = {0}", s);
+                            }
+                        }
+                        else CodeSite.SendError(s);
                     }
                     catch (Exception ex)
                     {
                         CodeSite.SendException(s, ex);
                     }
                 }
+                db.SubmitChanges();
             }
-            all.Sort();
-            File.WriteAllLines("GoogleIPHunter.txt", all.Select(p => p.ToString()));
+        }
+
+        private void buttonGoogleIPHunter_Click(object sender, EventArgs e)
+        {
+            var files = Directory.GetFiles(@"G:\DxgWork\GitHub\GoogleIPHunter\trunk", "*.txt", SearchOption.AllDirectories);
+            List<IPNetwork> all = new List<IPNetwork>();
+            using (IPv4DataContext db = new IPv4DataContext())
+            {
+                foreach (var file in files)
+                {
+                    foreach (var s in File.ReadAllLines(file))
+                    {
+                        try
+                        {
+                            IPNetwork network = IPNetwork.Parse(s);
+                            if (network.ToString() == s)
+                            {
+                                uint address = network.Network.ToUInt32();
+                                if (!db.GoogleIPHunter.Any(f => f.Address == (long)address))
+                                {
+                                    db.GoogleIPHunter.InsertOnSubmit(new GoogleIPHunter() { Address = address, IPBlock = s });
+                                    db.SubmitChanges();
+                                    CodeSite.SendNote("新增 = {0}", s);
+                                }
+                            }
+                            else CodeSite.SendError(s);
+                        }
+                        catch (Exception ex)
+                        {
+                            //CodeSite.SendException(s, ex);
+                        }
+                    }
+                }
+            }
         }
 
         private void buttonIPv4DB_Click(object sender, EventArgs e)
@@ -197,16 +214,6 @@ namespace GiChecker
                 IPAddress ipa = ((uint)ip).ToIPAddress();
                 CodeSite.SendCollection(ipa.ToString(), IPv4Location.Find(ipa));
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            IPv4SSL ip = new IPv4SSL(IPAddress.Parse("111.13.101.208").ToUInt32());
-            Search.WebCheck(ip);
-            CodeSite.Send("ip", ip);
-            ip = new IPv4SSL(IPAddress.Parse("111.13.101.208").ToUInt32());
-            Search.TcpCheck(ip);
-            CodeSite.Send("ip", ip);
         }
     }
 }

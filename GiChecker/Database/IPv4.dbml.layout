@@ -14,5 +14,17 @@
         <elementListCompartment Id="eef39ce4-b8ee-4ccc-b1c1-2f7a9e91df60" absoluteBounds="5.64, 2.835, 1.9700000000000002, 0.792510986328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="43734c85-39ab-4c04-be9d-e6e6c14da583" absoluteBounds="0.875, 1, 2, 1.1677168782552083">
+      <DataClassMoniker Name="/IPv4DataContext/GoogleIPDuan" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c23caa65-9520-4aa9-8377-62d4d8e92f5d" absoluteBounds="0.89, 1.46, 1.9700000000000002, 0.60771687825520826" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1302f333-6d8e-4f61-acb2-779d9ae527b4" absoluteBounds="3, 1, 2, 1.1677168782552083">
+      <DataClassMoniker Name="/IPv4DataContext/GoogleIPHunter" />
+      <nestedChildShapes>
+        <elementListCompartment Id="080a67b5-0309-4af0-a372-af7f210069a6" absoluteBounds="3.015, 1.46, 1.9700000000000002, 0.60771687825520826" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

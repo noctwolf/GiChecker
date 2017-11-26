@@ -36,6 +36,12 @@ namespace GiChecker.Database
     partial void InsertIPv4Assigned(IPv4Assigned instance);
     partial void UpdateIPv4Assigned(IPv4Assigned instance);
     partial void DeleteIPv4Assigned(IPv4Assigned instance);
+    partial void InsertGoogleIPDuan(GoogleIPDuan instance);
+    partial void UpdateGoogleIPDuan(GoogleIPDuan instance);
+    partial void DeleteGoogleIPDuan(GoogleIPDuan instance);
+    partial void InsertGoogleIPHunter(GoogleIPHunter instance);
+    partial void UpdateGoogleIPHunter(GoogleIPHunter instance);
+    partial void DeleteGoogleIPHunter(GoogleIPHunter instance);
     #endregion
 		
 		public IPv4DataContext() : 
@@ -81,6 +87,22 @@ namespace GiChecker.Database
 			get
 			{
 				return this.GetTable<IPv4Assigned>();
+			}
+		}
+		
+		public System.Data.Linq.Table<GoogleIPDuan> GoogleIPDuan
+		{
+			get
+			{
+				return this.GetTable<GoogleIPDuan>();
+			}
+		}
+		
+		public System.Data.Linq.Table<GoogleIPHunter> GoogleIPHunter
+		{
+			get
+			{
+				return this.GetTable<GoogleIPHunter>();
 			}
 		}
 	}
@@ -448,6 +470,178 @@ namespace GiChecker.Database
 					this._Organization = value;
 					this.SendPropertyChanged("Organization");
 					this.OnOrganizationChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.GoogleIPDuan")]
+	public partial class GoogleIPDuan : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _Address;
+		
+		private string _IPBlock;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAddressChanging(long value);
+    partial void OnAddressChanged();
+    partial void OnIPBlockChanging(string value);
+    partial void OnIPBlockChanged();
+    #endregion
+		
+		public GoogleIPDuan()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IPBlock", DbType="VarChar(18) NOT NULL", CanBeNull=false)]
+		public string IPBlock
+		{
+			get
+			{
+				return this._IPBlock;
+			}
+			set
+			{
+				if ((this._IPBlock != value))
+				{
+					this.OnIPBlockChanging(value);
+					this.SendPropertyChanging();
+					this._IPBlock = value;
+					this.SendPropertyChanged("IPBlock");
+					this.OnIPBlockChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.GoogleIPHunter")]
+	public partial class GoogleIPHunter : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _Address;
+		
+		private string _IPBlock;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAddressChanging(long value);
+    partial void OnAddressChanged();
+    partial void OnIPBlockChanging(string value);
+    partial void OnIPBlockChanged();
+    #endregion
+		
+		public GoogleIPHunter()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IPBlock", DbType="VarChar(18) NOT NULL", CanBeNull=false)]
+		public string IPBlock
+		{
+			get
+			{
+				return this._IPBlock;
+			}
+			set
+			{
+				if ((this._IPBlock != value))
+				{
+					this.OnIPBlockChanging(value);
+					this.SendPropertyChanging();
+					this._IPBlock = value;
+					this.SendPropertyChanged("IPBlock");
+					this.OnIPBlockChanged();
 				}
 			}
 		}

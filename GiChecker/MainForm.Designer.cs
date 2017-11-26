@@ -46,8 +46,7 @@
             this.buttonMMF = new System.Windows.Forms.Button();
             this.buttonGoogleIP = new System.Windows.Forms.Button();
             this.buttonGoogleIPHunter = new System.Windows.Forms.Button();
-            this.buttonIPv4DB = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonIPv4Location = new System.Windows.Forms.Button();
             this.ucFormAlign1 = new GiChecker.UC.UCFormAlign();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
@@ -164,8 +163,7 @@
             this.flowLayoutPanel1.Controls.Add(this.buttonMMF);
             this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIP);
             this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIPHunter);
-            this.flowLayoutPanel1.Controls.Add(this.buttonIPv4DB);
-            this.flowLayoutPanel1.Controls.Add(this.button1);
+            this.flowLayoutPanel1.Controls.Add(this.buttonIPv4Location);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -223,16 +221,16 @@
             this.buttonGoogleIP.AutoSize = true;
             this.buttonGoogleIP.Location = new System.Drawing.Point(3, 32);
             this.buttonGoogleIP.Name = "buttonGoogleIP";
-            this.buttonGoogleIP.Size = new System.Drawing.Size(171, 23);
+            this.buttonGoogleIP.Size = new System.Drawing.Size(99, 23);
             this.buttonGoogleIP.TabIndex = 4;
-            this.buttonGoogleIP.Text = "google ip duan => GoogleIP";
+            this.buttonGoogleIP.Text = "google ip duan";
             this.buttonGoogleIP.UseVisualStyleBackColor = true;
             this.buttonGoogleIP.Click += new System.EventHandler(this.buttonGoogleIP_Click);
             // 
             // buttonGoogleIPHunter
             // 
             this.buttonGoogleIPHunter.AutoSize = true;
-            this.buttonGoogleIPHunter.Location = new System.Drawing.Point(180, 32);
+            this.buttonGoogleIPHunter.Location = new System.Drawing.Point(108, 32);
             this.buttonGoogleIPHunter.Name = "buttonGoogleIPHunter";
             this.buttonGoogleIPHunter.Size = new System.Drawing.Size(99, 23);
             this.buttonGoogleIPHunter.TabIndex = 5;
@@ -240,25 +238,17 @@
             this.buttonGoogleIPHunter.UseVisualStyleBackColor = true;
             this.buttonGoogleIPHunter.Click += new System.EventHandler(this.buttonGoogleIPHunter_Click);
             // 
-            // buttonIPv4DB
+            // buttonIPv4Location
             // 
-            this.buttonIPv4DB.Location = new System.Drawing.Point(285, 32);
-            this.buttonIPv4DB.Name = "buttonIPv4DB";
-            this.buttonIPv4DB.Size = new System.Drawing.Size(75, 23);
-            this.buttonIPv4DB.TabIndex = 6;
-            this.buttonIPv4DB.Text = "IPv4DB";
-            this.buttonIPv4DB.UseVisualStyleBackColor = true;
-            this.buttonIPv4DB.Click += new System.EventHandler(this.buttonIPv4DB_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(366, 32);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonIPv4Location.AutoSize = true;
+            this.flowLayoutPanel1.SetFlowBreak(this.buttonIPv4Location, true);
+            this.buttonIPv4Location.Location = new System.Drawing.Point(213, 32);
+            this.buttonIPv4Location.Name = "buttonIPv4Location";
+            this.buttonIPv4Location.Size = new System.Drawing.Size(87, 23);
+            this.buttonIPv4Location.TabIndex = 6;
+            this.buttonIPv4Location.Text = "IPv4Location";
+            this.buttonIPv4Location.UseVisualStyleBackColor = true;
+            this.buttonIPv4Location.Click += new System.EventHandler(this.buttonIPv4DB_Click);
             // 
             // ucFormAlign1
             // 
@@ -305,8 +295,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn 谷歌;
         private System.Windows.Forms.DataGridViewTextBoxColumn 归属地;
         private System.Windows.Forms.Button buttonGoogleIPHunter;
-        private System.Windows.Forms.Button buttonIPv4DB;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonIPv4Location;
         private UC.UCFormAlign ucFormAlign1;
     }
 }

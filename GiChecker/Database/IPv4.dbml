@@ -21,4 +21,16 @@
       <Column Name="Organization" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.GoogleIPDuan" Member="GoogleIPDuan">
+    <Type Name="GoogleIPDuan">
+      <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IPBlock" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GoogleIPHunter" Member="GoogleIPHunter">
+    <Type Name="GoogleIPHunter">
+      <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IPBlock" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
 </Database>
