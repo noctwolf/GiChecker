@@ -75,19 +75,25 @@ namespace GiChecker
 
         static bool SaveFile(string filename, IEnumerable<string> list)
         {
-            if (File.Exists(filename))
+            FileInfo fi = new FileInfo(filename);
+            if (!fi.Directory.Exists)
             {
-                var old = File.ReadAllLines(filename).AsEnumerable();
+                CodeSite.Send("目录不存在", fi.DirectoryName);
+                return false;
+            }
+            if (fi.Exists)
+            {
+                var old = File.ReadAllLines(fi.FullName).AsEnumerable();
                 if (list.SequenceEqual(old))
                 {
-                    CodeSite.SendNote("内容无变化{0}", filename);
+                    CodeSite.SendNote("内容无变化{0}", fi.FullName);
                     return false;
                 }
                 else
                     CodeSite.SendCollection("新增", list.Except(old));
             }
-            File.WriteAllLines(filename, list);
-            CodeSite.SendCollection(filename, list);
+            File.WriteAllLines(fi.FullName, list);
+            CodeSite.SendCollection(fi.FullName, list);
             return true;
         }
 
@@ -103,7 +109,7 @@ namespace GiChecker
                            group item by string.Format("{0}/24", ((uint)item & 0xFFFFFF00).ToIPAddress());
                 string filename = string.Format("{0}{1}.txt", Properties.Settings.Default.MMFPath, Path.GetFileNameWithoutExtension(Application.ExecutablePath));
                 SaveFile(filename, list.Select(f => f.Key));
-                var publicList = db.GoogleIPDuan.Select(f => f.IPBlock).Union(db.GoogleIPHunter.Select(f=>f.IPBlock));
+                var publicList = db.GoogleIPDuan.Select(f => f.IPBlock).Union(db.GoogleIPHunter.Select(f => f.IPBlock));
                 if (publicList.Count() > 0)
                 {
                     var p = from itemg in list
