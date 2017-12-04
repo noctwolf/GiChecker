@@ -42,12 +42,13 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.button扫描全球 = new System.Windows.Forms.Button();
             this.labelCount = new System.Windows.Forms.Label();
-            this.button更新 = new System.Windows.Forms.Button();
+            this.buttonServernull = new System.Windows.Forms.Button();
             this.buttonMMF = new System.Windows.Forms.Button();
             this.buttonGoogleIP = new System.Windows.Forms.Button();
             this.buttonGoogleIPHunter = new System.Windows.Forms.Button();
             this.buttonIPv4Location = new System.Windows.Forms.Button();
             this.ucFormAlign1 = new GiChecker.UC.UCFormAlign();
+            this.buttongws = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -159,7 +160,8 @@
             this.flowLayoutPanel1.Controls.Add(this.ucFormAlign1);
             this.flowLayoutPanel1.Controls.Add(this.button扫描全球);
             this.flowLayoutPanel1.Controls.Add(this.labelCount);
-            this.flowLayoutPanel1.Controls.Add(this.button更新);
+            this.flowLayoutPanel1.Controls.Add(this.buttonServernull);
+            this.flowLayoutPanel1.Controls.Add(this.buttongws);
             this.flowLayoutPanel1.Controls.Add(this.buttonMMF);
             this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIP);
             this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIPHunter);
@@ -193,22 +195,22 @@
             this.labelCount.Text = "进度";
             this.labelCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button更新
+            // buttonServernull
             // 
-            this.button更新.AutoSize = true;
-            this.button更新.Location = new System.Drawing.Point(148, 3);
-            this.button更新.Name = "button更新";
-            this.button更新.Size = new System.Drawing.Size(75, 23);
-            this.button更新.TabIndex = 3;
-            this.button更新.Text = "更新";
-            this.button更新.UseVisualStyleBackColor = true;
-            this.button更新.Click += new System.EventHandler(this.button更新_Click);
+            this.buttonServernull.AutoSize = true;
+            this.buttonServernull.Location = new System.Drawing.Point(148, 3);
+            this.buttonServernull.Name = "buttonServernull";
+            this.buttonServernull.Size = new System.Drawing.Size(99, 23);
+            this.buttonServernull.TabIndex = 3;
+            this.buttonServernull.Text = "Server == null";
+            this.buttonServernull.UseVisualStyleBackColor = true;
+            this.buttonServernull.Click += new System.EventHandler(this.buttonServernull_Click);
             // 
             // buttonMMF
             // 
             this.buttonMMF.AutoSize = true;
             this.flowLayoutPanel1.SetFlowBreak(this.buttonMMF, true);
-            this.buttonMMF.Location = new System.Drawing.Point(229, 3);
+            this.buttonMMF.Location = new System.Drawing.Point(334, 3);
             this.buttonMMF.Name = "buttonMMF";
             this.buttonMMF.Size = new System.Drawing.Size(75, 23);
             this.buttonMMF.TabIndex = 1;
@@ -257,6 +259,16 @@
             this.ucFormAlign1.Size = new System.Drawing.Size(23, 23);
             this.ucFormAlign1.TabIndex = 8;
             // 
+            // buttongws
+            // 
+            this.buttongws.Location = new System.Drawing.Point(253, 3);
+            this.buttongws.Name = "buttongws";
+            this.buttongws.Size = new System.Drawing.Size(75, 23);
+            this.buttongws.TabIndex = 9;
+            this.buttongws.Text = "gws";
+            this.buttongws.UseVisualStyleBackColor = true;
+            this.buttongws.Click += new System.EventHandler(this.buttongws_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -285,7 +297,7 @@
         private System.Windows.Forms.Button button扫描全球;
         private System.Windows.Forms.Button buttonMMF;
         private System.Windows.Forms.Label labelCount;
-        private System.Windows.Forms.Button button更新;
+        private System.Windows.Forms.Button buttonServernull;
         private System.Windows.Forms.Button buttonGoogleIP;
         private System.Windows.Forms.DataGridViewTextBoxColumn IP;
         private System.Windows.Forms.DataGridViewTextBoxColumn 延迟;
@@ -297,6 +309,7 @@
         private System.Windows.Forms.Button buttonGoogleIPHunter;
         private System.Windows.Forms.Button buttonIPv4Location;
         private UC.UCFormAlign ucFormAlign1;
+        private System.Windows.Forms.Button buttongws;
     }
 }
 

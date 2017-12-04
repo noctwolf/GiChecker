@@ -46,18 +46,26 @@ namespace GiChecker.TPL
 
         private void SaveDB(IEnumerable<IPv4SSL> ipa)
         {
-            try
+            if (ProgressIP != null) foreach (var item in ipa) if (item.Isgws) ProgressIP.Report(item);
+            using (IPv4DataContext db = new IPv4DataContext())
             {
-                if (ProgressIP != null) foreach (var item in ipa) if (item.Isgxs) ProgressIP.Report(item);
-                using (IPv4DataContext db = new IPv4DataContext())
+                try
                 {
                     db.IPv4SSL.InsertAllOnSubmit(ipa);
                     db.SubmitChanges();
                 }
-            }
-            catch (Exception ex)
-            {
-                CodeSite.SendException("SaveDB", ex);
+                catch (Exception ex)
+                {
+                    CodeSite.SendException("SubmitChanges", ex);
+                    try
+                    {
+                        db.SubmitChanges();
+                    }
+                    catch (Exception exr)
+                    {
+                        CodeSite.SendException("ReSubmitChanges", exr);
+                    }
+                }
             }
         }
 

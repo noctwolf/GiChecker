@@ -30,9 +30,6 @@ namespace GiChecker.Database
 		
     #region 可扩展性方法定义
     partial void OnCreated();
-    partial void InsertIPv4SSL(IPv4SSL instance);
-    partial void UpdateIPv4SSL(IPv4SSL instance);
-    partial void DeleteIPv4SSL(IPv4SSL instance);
     partial void InsertIPv4Assigned(IPv4Assigned instance);
     partial void UpdateIPv4Assigned(IPv4Assigned instance);
     partial void DeleteIPv4Assigned(IPv4Assigned instance);
@@ -42,6 +39,12 @@ namespace GiChecker.Database
     partial void InsertGoogleIPHunter(GoogleIPHunter instance);
     partial void UpdateGoogleIPHunter(GoogleIPHunter instance);
     partial void DeleteGoogleIPHunter(GoogleIPHunter instance);
+    partial void InsertIPv4SSL(IPv4SSL instance);
+    partial void UpdateIPv4SSL(IPv4SSL instance);
+    partial void DeleteIPv4SSL(IPv4SSL instance);
+    partial void Insertgws(gws instance);
+    partial void Updategws(gws instance);
+    partial void Deletegws(gws instance);
     #endregion
 		
 		public IPv4DataContext() : 
@@ -74,14 +77,6 @@ namespace GiChecker.Database
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<IPv4SSL> IPv4SSL
-		{
-			get
-			{
-				return this.GetTable<IPv4SSL>();
-			}
-		}
-		
 		public System.Data.Linq.Table<IPv4Assigned> IPv4Assigned
 		{
 			get
@@ -105,282 +100,20 @@ namespace GiChecker.Database
 				return this.GetTable<GoogleIPHunter>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IPv4SSL")]
-	public partial class IPv4SSL : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _Address;
-		
-		private string _IP;
-		
-		private int _RoundtripTime;
-		
-		private string _Issuer;
-		
-		private string _Subject;
-		
-		private string _Server;
-		
-		private bool _Isgxs;
-		
-		private System.Nullable<int> _Speed;
-		
-		private string _Location;
-		
-		private System.DateTime _UpdateTime;
-		
-    #region 可扩展性方法定义
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnAddressChanging(long value);
-    partial void OnAddressChanged();
-    partial void OnIPChanging(string value);
-    partial void OnIPChanged();
-    partial void OnRoundtripTimeChanging(int value);
-    partial void OnRoundtripTimeChanged();
-    partial void OnIssuerChanging(string value);
-    partial void OnIssuerChanged();
-    partial void OnSubjectChanging(string value);
-    partial void OnSubjectChanged();
-    partial void OnServerChanging(string value);
-    partial void OnServerChanged();
-    partial void OnIsgxsChanging(bool value);
-    partial void OnIsgxsChanged();
-    partial void OnSpeedChanging(System.Nullable<int> value);
-    partial void OnSpeedChanged();
-    partial void OnLocationChanging(string value);
-    partial void OnLocationChanged();
-    partial void OnUpdateTimeChanging(System.DateTime value);
-    partial void OnUpdateTimeChanged();
-    #endregion
-		
-		public IPv4SSL()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
-		public long Address
+		public System.Data.Linq.Table<IPv4SSL> IPv4SSL
 		{
 			get
 			{
-				return this._Address;
-			}
-			set
-			{
-				if ((this._Address != value))
-				{
-					this.OnAddressChanging(value);
-					this.SendPropertyChanging();
-					this._Address = value;
-					this.SendPropertyChanged("Address");
-					this.OnAddressChanged();
-				}
+				return this.GetTable<IPv4SSL>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IP", DbType="VarChar(15) NOT NULL", CanBeNull=false)]
-		public string IP
+		public System.Data.Linq.Table<gws> gws
 		{
 			get
 			{
-				return this._IP;
-			}
-			set
-			{
-				if ((this._IP != value))
-				{
-					this.OnIPChanging(value);
-					this.SendPropertyChanging();
-					this._IP = value;
-					this.SendPropertyChanged("IP");
-					this.OnIPChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoundtripTime", DbType="Int NOT NULL")]
-		public int RoundtripTime
-		{
-			get
-			{
-				return this._RoundtripTime;
-			}
-			set
-			{
-				if ((this._RoundtripTime != value))
-				{
-					this.OnRoundtripTimeChanging(value);
-					this.SendPropertyChanging();
-					this._RoundtripTime = value;
-					this.SendPropertyChanged("RoundtripTime");
-					this.OnRoundtripTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Issuer", DbType="VarChar(256)")]
-		public string Issuer
-		{
-			get
-			{
-				return this._Issuer;
-			}
-			set
-			{
-				if ((this._Issuer != value))
-				{
-					this.OnIssuerChanging(value);
-					this.SendPropertyChanging();
-					this._Issuer = value;
-					this.SendPropertyChanged("Issuer");
-					this.OnIssuerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Subject", DbType="VarChar(256)")]
-		public string Subject
-		{
-			get
-			{
-				return this._Subject;
-			}
-			set
-			{
-				if ((this._Subject != value))
-				{
-					this.OnSubjectChanging(value);
-					this.SendPropertyChanging();
-					this._Subject = value;
-					this.SendPropertyChanged("Subject");
-					this.OnSubjectChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Server", DbType="VarChar(256)")]
-		public string Server
-		{
-			get
-			{
-				return this._Server;
-			}
-			set
-			{
-				if ((this._Server != value))
-				{
-					this.OnServerChanging(value);
-					this.SendPropertyChanging();
-					this._Server = value;
-					this.SendPropertyChanged("Server");
-					this.OnServerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Isgxs", DbType="Bit NOT NULL")]
-		public bool Isgxs
-		{
-			get
-			{
-				return this._Isgxs;
-			}
-			set
-			{
-				if ((this._Isgxs != value))
-				{
-					this.OnIsgxsChanging(value);
-					this.SendPropertyChanging();
-					this._Isgxs = value;
-					this.SendPropertyChanged("Isgxs");
-					this.OnIsgxsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Speed", DbType="Int")]
-		public System.Nullable<int> Speed
-		{
-			get
-			{
-				return this._Speed;
-			}
-			set
-			{
-				if ((this._Speed != value))
-				{
-					this.OnSpeedChanging(value);
-					this.SendPropertyChanging();
-					this._Speed = value;
-					this.SendPropertyChanged("Speed");
-					this.OnSpeedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Location", DbType="VarChar(50)")]
-		public string Location
-		{
-			get
-			{
-				return this._Location;
-			}
-			set
-			{
-				if ((this._Location != value))
-				{
-					this.OnLocationChanging(value);
-					this.SendPropertyChanging();
-					this._Location = value;
-					this.SendPropertyChanged("Location");
-					this.OnLocationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateTime", DbType="DateTime2 NOT NULL")]
-		public System.DateTime UpdateTime
-		{
-			get
-			{
-				return this._UpdateTime;
-			}
-			set
-			{
-				if ((this._UpdateTime != value))
-				{
-					this.OnUpdateTimeChanging(value);
-					this.SendPropertyChanging();
-					this._UpdateTime = value;
-					this.SendPropertyChanged("UpdateTime");
-					this.OnUpdateTimeChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<gws>();
 			}
 		}
 	}
@@ -642,6 +375,442 @@ namespace GiChecker.Database
 					this._IPBlock = value;
 					this.SendPropertyChanged("IPBlock");
 					this.OnIPBlockChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IPv4SSL")]
+	public partial class IPv4SSL : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _Address;
+		
+		private byte _A;
+		
+		private string _IP;
+		
+		private int _RoundtripTime;
+		
+		private string _Issuer;
+		
+		private string _Subject;
+		
+		private string _Server;
+		
+		private System.Nullable<int> _Speed;
+		
+		private string _Location;
+		
+		private bool _IsSSL;
+		
+		private bool _IsGoogle;
+		
+		private bool _Isgws;
+		
+		private System.DateTime _UpdateTime;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAddressChanging(long value);
+    partial void OnAddressChanged();
+    partial void OnAChanging(byte value);
+    partial void OnAChanged();
+    partial void OnIPChanging(string value);
+    partial void OnIPChanged();
+    partial void OnRoundtripTimeChanging(int value);
+    partial void OnRoundtripTimeChanged();
+    partial void OnIssuerChanging(string value);
+    partial void OnIssuerChanged();
+    partial void OnSubjectChanging(string value);
+    partial void OnSubjectChanged();
+    partial void OnServerChanging(string value);
+    partial void OnServerChanged();
+    partial void OnSpeedChanging(System.Nullable<int> value);
+    partial void OnSpeedChanged();
+    partial void OnLocationChanging(string value);
+    partial void OnLocationChanged();
+    partial void OnIsSSLChanging(bool value);
+    partial void OnIsSSLChanged();
+    partial void OnIsGoogleChanging(bool value);
+    partial void OnIsGoogleChanged();
+    partial void OnIsgwsChanging(bool value);
+    partial void OnIsgwsChanged();
+    partial void OnUpdateTimeChanging(System.DateTime value);
+    partial void OnUpdateTimeChanged();
+    #endregion
+		
+		public IPv4SSL()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_A", DbType="TinyInt NOT NULL")]
+		public byte A
+		{
+			get
+			{
+				return this._A;
+			}
+			set
+			{
+				if ((this._A != value))
+				{
+					this.OnAChanging(value);
+					this.SendPropertyChanging();
+					this._A = value;
+					this.SendPropertyChanged("A");
+					this.OnAChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IP", DbType="VarChar(15) NOT NULL", CanBeNull=false)]
+		public string IP
+		{
+			get
+			{
+				return this._IP;
+			}
+			set
+			{
+				if ((this._IP != value))
+				{
+					this.OnIPChanging(value);
+					this.SendPropertyChanging();
+					this._IP = value;
+					this.SendPropertyChanged("IP");
+					this.OnIPChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoundtripTime", DbType="Int NOT NULL")]
+		public int RoundtripTime
+		{
+			get
+			{
+				return this._RoundtripTime;
+			}
+			set
+			{
+				if ((this._RoundtripTime != value))
+				{
+					this.OnRoundtripTimeChanging(value);
+					this.SendPropertyChanging();
+					this._RoundtripTime = value;
+					this.SendPropertyChanged("RoundtripTime");
+					this.OnRoundtripTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Issuer", DbType="VarChar(256)")]
+		public string Issuer
+		{
+			get
+			{
+				return this._Issuer;
+			}
+			set
+			{
+				if ((this._Issuer != value))
+				{
+					this.OnIssuerChanging(value);
+					this.SendPropertyChanging();
+					this._Issuer = value;
+					this.SendPropertyChanged("Issuer");
+					this.OnIssuerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Subject", DbType="VarChar(256)")]
+		public string Subject
+		{
+			get
+			{
+				return this._Subject;
+			}
+			set
+			{
+				if ((this._Subject != value))
+				{
+					this.OnSubjectChanging(value);
+					this.SendPropertyChanging();
+					this._Subject = value;
+					this.SendPropertyChanged("Subject");
+					this.OnSubjectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Server", DbType="VarChar(256)")]
+		public string Server
+		{
+			get
+			{
+				return this._Server;
+			}
+			set
+			{
+				if ((this._Server != value))
+				{
+					this.OnServerChanging(value);
+					this.SendPropertyChanging();
+					this._Server = value;
+					this.SendPropertyChanged("Server");
+					this.OnServerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Speed", DbType="Int")]
+		public System.Nullable<int> Speed
+		{
+			get
+			{
+				return this._Speed;
+			}
+			set
+			{
+				if ((this._Speed != value))
+				{
+					this.OnSpeedChanging(value);
+					this.SendPropertyChanging();
+					this._Speed = value;
+					this.SendPropertyChanged("Speed");
+					this.OnSpeedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Location", DbType="VarChar(50)")]
+		public string Location
+		{
+			get
+			{
+				return this._Location;
+			}
+			set
+			{
+				if ((this._Location != value))
+				{
+					this.OnLocationChanging(value);
+					this.SendPropertyChanging();
+					this._Location = value;
+					this.SendPropertyChanged("Location");
+					this.OnLocationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSSL", DbType="Bit NOT NULL")]
+		public bool IsSSL
+		{
+			get
+			{
+				return this._IsSSL;
+			}
+			set
+			{
+				if ((this._IsSSL != value))
+				{
+					this.OnIsSSLChanging(value);
+					this.SendPropertyChanging();
+					this._IsSSL = value;
+					this.SendPropertyChanged("IsSSL");
+					this.OnIsSSLChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsGoogle", DbType="Bit NOT NULL")]
+		public bool IsGoogle
+		{
+			get
+			{
+				return this._IsGoogle;
+			}
+			set
+			{
+				if ((this._IsGoogle != value))
+				{
+					this.OnIsGoogleChanging(value);
+					this.SendPropertyChanging();
+					this._IsGoogle = value;
+					this.SendPropertyChanged("IsGoogle");
+					this.OnIsGoogleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Isgws", DbType="Bit NOT NULL")]
+		public bool Isgws
+		{
+			get
+			{
+				return this._Isgws;
+			}
+			set
+			{
+				if ((this._Isgws != value))
+				{
+					this.OnIsgwsChanging(value);
+					this.SendPropertyChanging();
+					this._Isgws = value;
+					this.SendPropertyChanged("Isgws");
+					this.OnIsgwsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateTime", DbType="DateTime2 NOT NULL")]
+		public System.DateTime UpdateTime
+		{
+			get
+			{
+				return this._UpdateTime;
+			}
+			set
+			{
+				if ((this._UpdateTime != value))
+				{
+					this.OnUpdateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._UpdateTime = value;
+					this.SendPropertyChanged("UpdateTime");
+					this.OnUpdateTimeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.gws")]
+	public partial class gws : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _Address;
+		
+		private string _IP;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAddressChanging(long value);
+    partial void OnAddressChanged();
+    partial void OnIPChanging(string value);
+    partial void OnIPChanged();
+    #endregion
+		
+		public gws()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IP", DbType="VarChar(15) NOT NULL", CanBeNull=false)]
+		public string IP
+		{
+			get
+			{
+				return this._IP;
+			}
+			set
+			{
+				if ((this._IP != value))
+				{
+					this.OnIPChanging(value);
+					this.SendPropertyChanging();
+					this._IP = value;
+					this.SendPropertyChanged("IP");
+					this.OnIPChanged();
 				}
 			}
 		}

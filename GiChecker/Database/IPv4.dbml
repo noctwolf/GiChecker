@@ -1,19 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="IPv4" Class="IPv4DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=IPv4;Integrated Security=True" SettingsObjectName="GiChecker.Properties.Settings" SettingsPropertyName="IPv4ConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.IPv4SSL" Member="IPv4SSL">
-    <Type Name="IPv4SSL">
-      <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="IP" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
-      <Column Name="RoundtripTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Issuer" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
-      <Column Name="Subject" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
-      <Column Name="Server" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
-      <Column Name="Isgxs" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Speed" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Location" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="UpdateTime" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.IPv4Assigned" Member="IPv4Assigned">
     <Type Name="IPv4Assigned">
       <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -31,6 +17,29 @@
     <Type Name="GoogleIPHunter">
       <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="IPBlock" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IPv4SSL" Member="IPv4SSL">
+    <Type Name="IPv4SSL">
+      <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="A" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="IP" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="RoundtripTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Issuer" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="Subject" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="Server" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="Speed" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsSSL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsGoogle" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Isgws" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateTime" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.gws" Member="gws">
+    <Type Name="gws">
+      <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IP" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

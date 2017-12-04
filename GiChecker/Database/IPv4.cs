@@ -7,33 +7,26 @@ namespace GiChecker.Database
 {
     partial class IPv4SSL
     {
-        const string GoogleIssuer = "Google Internet Authority G2";
-        readonly string[] gxs = new string[] { "gws", "gvs 1.0" };
+        partial void OnIssuerChanged()
+        {
+            IsSSL = (Issuer != null) || (Subject != null);
+            IsGoogle = Issuer == "Google Internet Authority G2";
+        }
 
-        public bool IsGoogle { get { return Issuer == GoogleIssuer; } }
+        partial void OnSubjectChanged()
+        {
+            IsSSL = (Issuer != null) || (Subject != null);
+        }
 
         partial void OnServerChanged()
         {
-            CodeSite.EnterMethod(this, "OnServerChanged");
-            try
-            {
-                CodeSite.Send("Server", Server);
-                Isgxs = gxs.Contains(Server);
-            }
-            catch (Exception ex)
-            {
-                CodeSite.SendException("OnServerChanged", ex);
-                throw;
-            }
-            finally
-            {
-                CodeSite.ExitMethod(this, "OnServerChanged");
-            }
+            Isgws = Server == "gws";
         }
 
         public IPv4SSL(uint address)
         {
             Address = address;
+            A = (byte)(address >> 24);
             IP = address.ToIPAddress().ToString();
             RoundtripTime = -1;
             Location = IPv4Location.Find(IP)[0];

@@ -2,16 +2,10 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="IPv4">
   <DataContextMoniker Name="/IPv4DataContext" />
   <nestedChildShapes>
-    <classShape Id="d82d0d4e-05e8-4ae0-bbee-7d86e18712c0" absoluteBounds="2.875, 2.25, 2, 2.6460697428385416">
-      <DataClassMoniker Name="/IPv4DataContext/IPv4SSL" />
-      <nestedChildShapes>
-        <elementListCompartment Id="6e0545e9-3c62-4879-b1f1-9e2f8df096ab" absoluteBounds="2.89, 2.71, 1.9700000000000002, 2.0860697428385415" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="e0cc74d7-70bb-42ed-9e78-3fd9d9f2e547" absoluteBounds="5.625, 2.375, 2, 1.3525109863281251">
+    <classShape Id="e0cc74d7-70bb-42ed-9e78-3fd9d9f2e547" absoluteBounds="5.625, 2.625, 2, 1.3525109863281251">
       <DataClassMoniker Name="/IPv4DataContext/IPv4Assigned" />
       <nestedChildShapes>
-        <elementListCompartment Id="eef39ce4-b8ee-4ccc-b1c1-2f7a9e91df60" absoluteBounds="5.64, 2.835, 1.9700000000000002, 0.792510986328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="eef39ce4-b8ee-4ccc-b1c1-2f7a9e91df60" absoluteBounds="5.64, 3.085, 1.9700000000000002, 0.792510986328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="43734c85-39ab-4c04-be9d-e6e6c14da583" absoluteBounds="0.875, 1, 2, 1.1677168782552083">
@@ -24,6 +18,18 @@
       <DataClassMoniker Name="/IPv4DataContext/GoogleIPHunter" />
       <nestedChildShapes>
         <elementListCompartment Id="080a67b5-0309-4af0-a372-af7f210069a6" absoluteBounds="3.015, 1.46, 1.9700000000000002, 0.60771687825520826" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7b507a5d-b819-4957-805d-ced34336881b" absoluteBounds="3, 2.625, 2, 3.2004520670572916">
+      <DataClassMoniker Name="/IPv4DataContext/IPv4SSL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9b27c35c-f806-46ba-a0f9-b07d2d410c54" absoluteBounds="3.015, 3.085, 1.9700000000000002, 2.6404520670572915" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d286fa1c-4470-4981-945d-e740cdb0edf5" absoluteBounds="5.625, 1, 2, 1.1677168782552083">
+      <DataClassMoniker Name="/IPv4DataContext/gws" />
+      <nestedChildShapes>
+        <elementListCompartment Id="51288d11-c30c-49a5-bf63-f75e2957b054" absoluteBounds="5.64, 1.46, 1.9700000000000002, 0.60771687825520826" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

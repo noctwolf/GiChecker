@@ -102,8 +102,9 @@ namespace GiChecker
             using (IPv4DataContext db = new IPv4DataContext())
             {
                 var q = from item in db.IPv4SSL
-                        where item.Isgxs && item.Server == "gws"
+                        where item.Isgws
                         select item.Address;
+                q = q.Union(db.gws.Select(f => f.Address));
                 var list = from item in q.ToList()
                            orderby item
                            group item by string.Format("{0}/24", ((uint)item & 0xFFFFFF00).ToIPAddress());
@@ -125,23 +126,23 @@ namespace GiChecker
                            orderby item
                            group item by string.Format("{0}/8", ((uint)item & 0xFF000000).ToIPAddress());
                     var ip = from item in list
-                             select string.Join(",", from a in item select string.Format(@"""{0}""", ((uint)a).ToIPAddress())) + ",";
+                             select "\t\t\t" + string.Join(",", from a in item select string.Format(@"""{0}""", ((uint)a).ToIPAddress())) + ",";
                     SaveFile("gae.user.txt", ip);
                 }
             }
         }
 
-        private void button更新_Click(object sender, EventArgs e)
+        private void buttonServernull_Click(object sender, EventArgs e)
         {
             using (IPv4DataContext db = new IPv4DataContext())
             {
-                foreach (var ip in db.IPv4SSL.Where(f => f.Issuer == "Google Internet Authority G2" && f.Server == null).OrderBy(f => f.Address))
+                foreach (var ip in db.IPv4SSL.Where(f => f.IsGoogle && f.Server == null).OrderBy(f => f.Address))
                 {
                     CodeSite.Send("IP", ip.IP);
                     Search.WebCheck(ip);
                     Search.TcpCheck(ip);
+                    db.SubmitChanges();
                 }
-                db.SubmitChanges();
             }
         }
 
@@ -201,7 +202,7 @@ namespace GiChecker
                             }
                             else CodeSite.SendError(s);
                         }
-                        catch (Exception ex)
+                        catch
                         {
                             //CodeSite.SendException(s, ex);
                         }
@@ -219,6 +220,34 @@ namespace GiChecker
                 int ip = r.Next(int.MinValue, int.MaxValue);
                 IPAddress ipa = ((uint)ip).ToIPAddress();
                 CodeSite.SendCollection(ipa.ToString(), IPv4Location.Find(ipa));
+            }
+        }
+
+        private void buttongws_Click(object sender, EventArgs e)
+        {
+            using (IPv4DataContext db = new IPv4DataContext())
+            {
+                foreach (var gws in db.gws)
+                {
+                    CodeSite.Send("gws.IP", gws.IP);
+                    var ip = db.IPv4SSL.SingleOrDefault(f => f.Address == gws.Address);
+                    if (ip == null) ip = new IPv4SSL((UInt32)gws.Address);
+                    else if (ip.Isgws)
+                    {
+                        CodeSite.SendNote("跳过");
+                        continue;
+                    }
+                    Search.WebCheck(ip);
+                    if (ip.RoundtripTime != -1 && db.IPv4SSL.SingleOrDefault(f => f.Address == gws.Address) == null)
+                    {
+                        db.IPv4SSL.InsertOnSubmit(ip);
+                    }
+                    if (ip.Isgws)
+                    {
+                        CodeSite.Send("db.GetChangeSet()", db.GetChangeSet().ToString());
+                        db.SubmitChanges();
+                    }
+                }
             }
         }
     }
