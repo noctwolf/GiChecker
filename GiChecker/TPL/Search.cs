@@ -22,26 +22,33 @@ namespace GiChecker.TPL
         readonly SortedSet<uint> IPSet = new SortedSet<uint>();
         readonly List<uint> IPList = new List<uint>();
         readonly ConcurrentStack<IPv4SSL> IPStack = new ConcurrentStack<IPv4SSL>();
-        readonly CancellationToken ctWeb;
-        readonly IProgress<IPv4SSL> ProgressIP;
-        readonly IProgress<string> ProgressString;
-        CancellationTokenSource ctsSave;
-        Task taskSave;
+        CancellationTokenSource cts, ctsSave;
+        Task task, taskSave;
         int finishCount;
         int saveCount;
         string progressFormat;
 
-        Search(IProgress<IPv4SSL> progressIP = null, Progress<string> progressString = null)
-            : this(CancellationToken.None, progressIP, progressString)
-        {
+        public IProgress<IPv4SSL> ProgressIP { get; set; }
+        public IProgress<string> ProgressString { get; set; }
 
-        }
-
-        Search(CancellationToken cancellationToken, IProgress<IPv4SSL> progressIP = null, Progress<string> progressString = null)
+        public bool Cancel()
         {
-            ctWeb = cancellationToken;
-            ProgressIP = progressIP;
-            ProgressString = progressString;
+            if (cts != null && !cts.IsCancellationRequested)
+            {
+                CodeSite.EnterMethod(this, "Cancel");
+                try
+                {
+                    cts.Cancel();
+                    CodeSite.SendNote("cts.Cancel();");
+                    task.Wait();
+                    return true;
+                }
+                finally
+                {
+                    CodeSite.ExitMethod(this, "Cancel");
+                }
+            }
+            return false;
         }
 
         private void SaveDB(IEnumerable<IPv4SSL> ipa)
@@ -86,11 +93,6 @@ namespace GiChecker.TPL
                     }
                 }, ctsSave.Token);
             }
-            catch (Exception ex)
-            {
-                CodeSite.SendException("SaveThreadStart", ex);
-                throw;
-            }
             finally
             {
                 CodeSite.ExitMethod(this, "SaveThreadStart");
@@ -104,11 +106,6 @@ namespace GiChecker.TPL
             {
                 ctsSave.Cancel();
                 taskSave.Wait();
-            }
-            catch (Exception ex)
-            {
-                CodeSite.SendException("SaveThreadStop", ex);
-                throw;
             }
             finally
             {
@@ -191,10 +188,17 @@ namespace GiChecker.TPL
                         };
                         request.Method = "HEAD";
                         request.KeepAlive = false;
-                        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                        try
                         {
-                            ip.Server = response.Server;
-                            CodeSite.Send("response", response);
+                            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                            {
+                                ip.Server = response.Server;
+                                CodeSite.Send("response", response);
+                            }
+                        }
+                        finally
+                        {
+                            request.Abort();
                         }
                     }
                 }
@@ -259,7 +263,7 @@ namespace GiChecker.TPL
         {
             try
             {
-                ParallelOptions po = new ParallelOptions() { CancellationToken = ctWeb };
+                ParallelOptions po = new ParallelOptions() { CancellationToken = cts.Token };
                 Parallel.ForEach(IPSet, po, (uip) =>
                 {
                     Interlocked.Increment(ref finishCount);
@@ -283,7 +287,7 @@ namespace GiChecker.TPL
                     uint uip;
                     while (csIP.TryTake(out uip))
                     {
-                        if (ctWeb.IsCancellationRequested) return;
+                        if (cts.IsCancellationRequested) return;
                         Interlocked.Increment(ref finishCount);
                         if (WebCheck(uip)) Interlocked.Increment(ref saveCount);
                     }
@@ -311,7 +315,7 @@ namespace GiChecker.TPL
                 //TPLCheckList();
 
                 if (timer != null) timer.Dispose();
-                ctWeb.ThrowIfCancellationRequested();
+                cts.Token.ThrowIfCancellationRequested();
             }
             catch (Exception e)
             {
@@ -319,9 +323,10 @@ namespace GiChecker.TPL
             }
         }
 
-        Task IPv4SSLAsync()
+        public Task IPv4SSLAsync()
         {
-            Task task = new Task(() =>
+            cts = new CancellationTokenSource();
+            task = new Task(() =>
             {
                 try
                 {
@@ -333,7 +338,7 @@ namespace GiChecker.TPL
                     uint count = (uint)net.Total / 256;
                     for (uint i = net.Network.ToUInt32() >> 8; i <= uint.MaxValue >> 8; i++)
                     {
-                        if (ctWeb.IsCancellationRequested) break;
+                        if (cts.IsCancellationRequested) break;
                         uint uip = i << 8;
                         if (!IPNetworkSet.IPv4Reserved.Contains(uip) && !IPNetworkSet.IPv4Assigned.Contains(uip) ^ Properties.Settings.Default.IPv4Assigned)
                             for (uint j = 0; j < 256; j++) IPSet.Add(uip + j);
@@ -357,15 +362,56 @@ namespace GiChecker.TPL
                 {
                     CodeSite.SendException("IPv4SSLAsync", ex);
                 }
-            }, ctWeb);
+            }, cts.Token);
             task.Start();
             return task;
         }
 
-        //TAP
-        public static Task IPv4SSLAsync(CancellationToken cancellationToken, IProgress<IPv4SSL> progressIP, Progress<string> progressString)
+        public Task gwsAsync()
         {
-            return new Search(cancellationToken, progressIP, progressString).IPv4SSLAsync();
+            cts = new CancellationTokenSource();
+            task = Task.Factory.StartNew(() =>
+            {
+                while (!cts.IsCancellationRequested)
+                {
+                    try
+                    {
+                        using (IPv4DataContext db = new IPv4DataContext())
+                        {
+                            var q = db.gws.Select(f => f.Address).Except(db.IPv4SSL.Where(f => f.Isgws).Select(f => f.Address)).ToList();
+                            for (int i = 0; i < q.Count - 1; i++)
+                            {
+                                if (cts.IsCancellationRequested) break;
+                                var gws = q[i];
+                                //CodeSite.Send("gws.IP", gws.IP);
+                                if (ProgressString != null) ProgressString.Report(string.Format("{0}/{1}", i + 1, q.Count));
+                                var ip = db.IPv4SSL.SingleOrDefault(f => f.Address == gws);
+                                if (ip == null) ip = new IPv4SSL((UInt32)gws);
+                                else if (ip.Isgws)
+                                {
+                                    //CodeSite.SendNote("跳过");
+                                    continue;
+                                }
+                                Search.WebCheck(ip);
+                                if (ip.RoundtripTime != -1 && db.IPv4SSL.SingleOrDefault(f => f.Address == gws) == null)
+                                {
+                                    db.IPv4SSL.InsertOnSubmit(ip);
+                                }
+                                if (ip.Isgws)
+                                {
+                                    if (ProgressIP != null) ProgressIP.Report(ip);
+                                    db.SubmitChanges();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        CodeSite.SendException("gwsAsync", ex);
+                    }
+                }
+            }, cts.Token);
+            return task;
         }
     }
 }

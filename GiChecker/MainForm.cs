@@ -22,12 +22,16 @@ namespace GiChecker
 {
     public partial class MainForm : Form
     {
-        CancellationTokenSource cts;
-        Task task;
+        readonly Search search;
 
         public MainForm()
         {
             InitializeComponent();
+            search = new Search()
+            {
+                ProgressIP = new Progress<IPv4SSL>(p => bindingSource1.Add(p)),
+                ProgressString = new Progress<string>(p => labelCount.Text = p)
+            };
             using (IPv4DataContext db = new IPv4DataContext())
             {
                 IPNetworkSet.IPv4Assigned.Add(string.Join(Environment.NewLine, db.IPv4Assigned.Select(f => f.IPBlock)));
@@ -46,31 +50,12 @@ namespace GiChecker
 
         private void button扫描全球_Click(object sender, EventArgs e)
         {
-            if (cts != null && !cts.IsCancellationRequested)
-            {
-                cts.Cancel();
-                CodeSite.SendNote("cts.Cancel();");
-                task.Wait();
-                task.Dispose();
-                cts.Dispose();
-            }
-            else
-            {
-                cts = new CancellationTokenSource();
-                task = Search.IPv4SSLAsync(cts.Token,
-                    new Progress<IPv4SSL>(p => bindingSource1.Add(p)),
-                    new Progress<string>(p => labelCount.Text = p));
-            }
+            if (!search.Cancel()) search.IPv4SSLAsync();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (cts != null && !cts.IsCancellationRequested)
-            {
-                cts.Cancel();
-                CodeSite.SendNote("cts.Cancel();");
-                task.Wait();
-            }
+            search.Cancel();
         }
 
         static bool SaveFile(string filename, IEnumerable<string> list)
@@ -225,30 +210,7 @@ namespace GiChecker
 
         private void buttongws_Click(object sender, EventArgs e)
         {
-            using (IPv4DataContext db = new IPv4DataContext())
-            {
-                foreach (var gws in db.gws)
-                {
-                    CodeSite.Send("gws.IP", gws.IP);
-                    var ip = db.IPv4SSL.SingleOrDefault(f => f.Address == gws.Address);
-                    if (ip == null) ip = new IPv4SSL((UInt32)gws.Address);
-                    else if (ip.Isgws)
-                    {
-                        CodeSite.SendNote("跳过");
-                        continue;
-                    }
-                    Search.WebCheck(ip);
-                    if (ip.RoundtripTime != -1 && db.IPv4SSL.SingleOrDefault(f => f.Address == gws.Address) == null)
-                    {
-                        db.IPv4SSL.InsertOnSubmit(ip);
-                    }
-                    if (ip.Isgws)
-                    {
-                        CodeSite.Send("db.GetChangeSet()", db.GetChangeSet().ToString());
-                        db.SubmitChanges();
-                    }
-                }
-            }
+            if (!search.Cancel()) search.gwsAsync();
         }
     }
 }

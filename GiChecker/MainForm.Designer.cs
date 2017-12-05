@@ -40,15 +40,15 @@
             this.归属地 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.ucFormAlign1 = new GiChecker.UC.UCFormAlign();
             this.button扫描全球 = new System.Windows.Forms.Button();
+            this.buttongws = new System.Windows.Forms.Button();
             this.labelCount = new System.Windows.Forms.Label();
             this.buttonServernull = new System.Windows.Forms.Button();
             this.buttonMMF = new System.Windows.Forms.Button();
             this.buttonGoogleIP = new System.Windows.Forms.Button();
             this.buttonGoogleIPHunter = new System.Windows.Forms.Button();
             this.buttonIPv4Location = new System.Windows.Forms.Button();
-            this.ucFormAlign1 = new GiChecker.UC.UCFormAlign();
-            this.buttongws = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -80,7 +80,7 @@
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(784, 353);
+            this.dataGridView1.Size = new System.Drawing.Size(784, 303);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
             // 
@@ -159,9 +159,9 @@
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.ucFormAlign1);
             this.flowLayoutPanel1.Controls.Add(this.button扫描全球);
+            this.flowLayoutPanel1.Controls.Add(this.buttongws);
             this.flowLayoutPanel1.Controls.Add(this.labelCount);
             this.flowLayoutPanel1.Controls.Add(this.buttonServernull);
-            this.flowLayoutPanel1.Controls.Add(this.buttongws);
             this.flowLayoutPanel1.Controls.Add(this.buttonMMF);
             this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIP);
             this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIPHunter);
@@ -171,6 +171,13 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(784, 58);
             this.flowLayoutPanel1.TabIndex = 6;
+            // 
+            // ucFormAlign1
+            // 
+            this.ucFormAlign1.Location = new System.Drawing.Point(3, 3);
+            this.ucFormAlign1.Name = "ucFormAlign1";
+            this.ucFormAlign1.Size = new System.Drawing.Size(23, 23);
+            this.ucFormAlign1.TabIndex = 8;
             // 
             // button扫描全球
             // 
@@ -183,11 +190,21 @@
             this.button扫描全球.UseVisualStyleBackColor = true;
             this.button扫描全球.Click += new System.EventHandler(this.button扫描全球_Click);
             // 
+            // buttongws
+            // 
+            this.buttongws.Location = new System.Drawing.Point(113, 3);
+            this.buttongws.Name = "buttongws";
+            this.buttongws.Size = new System.Drawing.Size(75, 23);
+            this.buttongws.TabIndex = 9;
+            this.buttongws.Text = "gws";
+            this.buttongws.UseVisualStyleBackColor = true;
+            this.buttongws.Click += new System.EventHandler(this.buttongws_Click);
+            // 
             // labelCount
             // 
             this.labelCount.AutoSize = true;
             this.labelCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelCount.Location = new System.Drawing.Point(113, 3);
+            this.labelCount.Location = new System.Drawing.Point(194, 3);
             this.labelCount.Margin = new System.Windows.Forms.Padding(3);
             this.labelCount.Name = "labelCount";
             this.labelCount.Size = new System.Drawing.Size(29, 23);
@@ -198,7 +215,7 @@
             // buttonServernull
             // 
             this.buttonServernull.AutoSize = true;
-            this.buttonServernull.Location = new System.Drawing.Point(148, 3);
+            this.buttonServernull.Location = new System.Drawing.Point(229, 3);
             this.buttonServernull.Name = "buttonServernull";
             this.buttonServernull.Size = new System.Drawing.Size(99, 23);
             this.buttonServernull.TabIndex = 3;
@@ -252,28 +269,11 @@
             this.buttonIPv4Location.UseVisualStyleBackColor = true;
             this.buttonIPv4Location.Click += new System.EventHandler(this.buttonIPv4DB_Click);
             // 
-            // ucFormAlign1
-            // 
-            this.ucFormAlign1.Location = new System.Drawing.Point(3, 3);
-            this.ucFormAlign1.Name = "ucFormAlign1";
-            this.ucFormAlign1.Size = new System.Drawing.Size(23, 23);
-            this.ucFormAlign1.TabIndex = 8;
-            // 
-            // buttongws
-            // 
-            this.buttongws.Location = new System.Drawing.Point(253, 3);
-            this.buttongws.Name = "buttongws";
-            this.buttongws.Size = new System.Drawing.Size(75, 23);
-            this.buttongws.TabIndex = 9;
-            this.buttongws.Text = "gws";
-            this.buttongws.UseVisualStyleBackColor = true;
-            this.buttongws.Click += new System.EventHandler(this.buttongws_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 411);
+            this.ClientSize = new System.Drawing.Size(784, 361);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "MainForm";
