@@ -14,7 +14,7 @@ namespace GiChecker
             try
             {
                 CodeSite.Send(CodeSiteMsgType.Exception, msg, value);
-                CodeSite.Send(CodeSiteMsgType.Exception, msg + ".StackTrace", value.StackTrace);
+                CodeSite.SendIf(value.StackTrace != null, CodeSiteMsgType.Exception, msg + ".StackTrace", value.StackTrace);
                 if (value.InnerException != null) value.InnerException.SendCodeSite(msg);
             }
             catch (Exception ex)
