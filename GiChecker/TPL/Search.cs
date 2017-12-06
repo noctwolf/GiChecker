@@ -51,29 +51,22 @@ namespace GiChecker.TPL
             return false;
         }
 
-        private void SaveDB(IEnumerable<IPv4SSL> ipa)
+        private static bool SaveDB(IEnumerable<IPv4SSL> ipa)
         {
-            if (ProgressIP != null) foreach (var item in ipa) if (item.Isgws) ProgressIP.Report(item);
             using (IPv4DataContext db = new IPv4DataContext())
             {
                 try
                 {
                     db.IPv4SSL.InsertAllOnSubmit(ipa);
                     db.SubmitChanges();
+                    return true;
                 }
                 catch (Exception ex)
                 {
-                    CodeSite.SendException("SubmitChanges", ex);
-                    try
-                    {
-                        db.SubmitChanges();
-                    }
-                    catch (Exception exr)
-                    {
-                        CodeSite.SendException("ReSubmitChanges", exr);
-                    }
+                    ex.SendCodeSite("SaveDB");
                 }
             }
+            return false;
         }
 
         void SaveThreadStart()
@@ -88,7 +81,12 @@ namespace GiChecker.TPL
                     int c;
                     while (!ctsSave.IsCancellationRequested || !IPStack.IsEmpty)
                     {
-                        if ((c = IPStack.TryPopRange(ipa)) > 0) SaveDB(ipa.Take(c));
+                        if ((c = IPStack.TryPopRange(ipa)) > 0)
+                        {
+                            var ip = ipa.Take(c);
+                            if (ProgressIP != null) foreach (var item in ip) if (item.Isgws) ProgressIP.Report(item);
+                            while (!SaveDB(ip) && !ctsSave.IsCancellationRequested) Thread.Sleep(1000);
+                        }
                         if (IPStack.IsEmpty) Thread.Sleep(1000);
                     }
                 }, ctsSave.Token);
@@ -214,7 +212,7 @@ namespace GiChecker.TPL
                         CodeSite.Send("response", response);
                     }
                     else
-                        CodeSite.SendException("IsGoogle", ex);
+                        ex.SendCodeSite("IsGoogle");
                 }
             }
             catch (Exception ex)
@@ -303,12 +301,14 @@ namespace GiChecker.TPL
         {
             try
             {
-                Timer timer = null; ;
+                Timer timer; ;
                 if (ProgressString != null)
                     timer = new Timer(p =>
-                   {
-                       ProgressString.Report(string.Format(progressFormat, finishCount, saveCount));
-                   }, null, 1000, 1000);
+                    {
+                        ProgressString.Report(string.Format(progressFormat, finishCount, saveCount));
+                    }, null, 1000, 1000);
+                else
+                    timer = null;
                 saveCount = 0;
 
                 ThreadCheckList();
@@ -317,9 +317,9 @@ namespace GiChecker.TPL
                 if (timer != null) timer.Dispose();
                 cts.Token.ThrowIfCancellationRequested();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                CodeSite.SendException("ThreadCheckList", e);
+                ex.SendCodeSite("CheckList");
             }
         }
 
@@ -360,7 +360,7 @@ namespace GiChecker.TPL
                 }
                 catch (Exception ex)
                 {
-                    CodeSite.SendException("IPv4SSLAsync", ex);
+                    ex.SendCodeSite("IPv4SSLAsync");
                 }
             }, cts.Token);
             task.Start();
@@ -407,7 +407,8 @@ namespace GiChecker.TPL
                     }
                     catch (Exception ex)
                     {
-                        CodeSite.SendException("gwsAsync", ex);
+                        ex.SendCodeSite("gwsAsync");
+                        Thread.Sleep(1000);
                     }
                 }
             }, cts.Token);

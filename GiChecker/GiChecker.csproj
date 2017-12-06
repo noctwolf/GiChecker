@@ -69,6 +69,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IPv4.dbml</DependentUpon>
     </Compile>
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Net\IPNetworkSet.cs" />
     <Compile Include="Net\IPAddressExtension.cs" />
     <Compile Include="MainForm.cs">
