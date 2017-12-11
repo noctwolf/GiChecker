@@ -36,10 +36,15 @@
       <Column Name="UpdateTime" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.gws_Old" Member="gws_Old">
+    <Type Name="gws_Old">
+      <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IP" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
   <Table Name="dbo.gws" Member="gws">
     <Type Name="gws">
       <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="IP" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

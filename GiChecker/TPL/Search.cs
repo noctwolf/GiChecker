@@ -151,7 +151,7 @@ namespace GiChecker.TPL
             }
             catch (Exception ex)
             {
-                CodeSite.SendException("TcpCheck", ex);
+                ex.SendCodeSite("TcpCheck");
             }
             tcpClient.Close();
         }
@@ -217,7 +217,7 @@ namespace GiChecker.TPL
             }
             catch (Exception ex)
             {
-                if (ip.IsGoogle) CodeSite.SendException("WebCheck", ex);
+                if (ip.IsGoogle) ex.SendCodeSite("WebCheck");
             }
         }
 
@@ -268,9 +268,9 @@ namespace GiChecker.TPL
                     if (WebCheck(uip)) Interlocked.Increment(ref saveCount);
                 });
             }
-            catch (OperationCanceledException e)
+            catch (OperationCanceledException ex)
             {
-                CodeSite.SendException("OperationCanceledException", e);
+                ex.SendCodeSite("OperationCanceledException");
             }
         }
 
@@ -378,7 +378,7 @@ namespace GiChecker.TPL
                     {
                         using (IPv4DataContext db = new IPv4DataContext())
                         {
-                            var q = db.gws.Select(f => f.Address).Except(db.IPv4SSL.Where(f => f.Isgws).Select(f => f.Address)).ToList();
+                            var q = db.gws_Old.Select(f => f.Address).Except(db.gws.Select(f => f.Address)).ToList();
                             for (int i = 0; i < q.Count - 1; i++)
                             {
                                 if (cts.IsCancellationRequested) break;

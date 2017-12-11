@@ -26,10 +26,16 @@
         <elementListCompartment Id="9b27c35c-f806-46ba-a0f9-b07d2d410c54" absoluteBounds="3.015, 3.085, 1.9700000000000002, 2.6404520670572915" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="d286fa1c-4470-4981-945d-e740cdb0edf5" absoluteBounds="5.625, 1, 2, 1.1677168782552083">
+    <classShape Id="c877c408-ff8d-4bae-8671-5f6e42850306" absoluteBounds="5.625, 1, 2, 1.1677168782552083">
+      <DataClassMoniker Name="/IPv4DataContext/gws_Old" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5b58d463-3745-46e2-878b-a412c27fb210" absoluteBounds="5.64, 1.46, 1.9700000000000002, 0.60771687825520826" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b50ab11e-f5f7-4927-898f-00b31d87bf8d" absoluteBounds="7.75, 1, 2, 0.98292277018229179">
       <DataClassMoniker Name="/IPv4DataContext/gws" />
       <nestedChildShapes>
-        <elementListCompartment Id="51288d11-c30c-49a5-bf63-f75e2957b054" absoluteBounds="5.64, 1.46, 1.9700000000000002, 0.60771687825520826" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="8a13b575-a382-4f9e-b838-4b14547f8d25" absoluteBounds="7.7650000000000006, 1.46, 1.9700000000000002, 0.42292277018229169" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

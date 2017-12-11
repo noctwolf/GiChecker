@@ -42,6 +42,9 @@ namespace GiChecker.Database
     partial void InsertIPv4SSL(IPv4SSL instance);
     partial void UpdateIPv4SSL(IPv4SSL instance);
     partial void DeleteIPv4SSL(IPv4SSL instance);
+    partial void Insertgws_Old(gws_Old instance);
+    partial void Updategws_Old(gws_Old instance);
+    partial void Deletegws_Old(gws_Old instance);
     partial void Insertgws(gws instance);
     partial void Updategws(gws instance);
     partial void Deletegws(gws instance);
@@ -106,6 +109,14 @@ namespace GiChecker.Database
 			get
 			{
 				return this.GetTable<IPv4SSL>();
+			}
+		}
+		
+		public System.Data.Linq.Table<gws_Old> gws_Old
+		{
+			get
+			{
+				return this.GetTable<gws_Old>();
 			}
 		}
 		
@@ -750,8 +761,8 @@ namespace GiChecker.Database
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.gws")]
-	public partial class gws : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.gws_Old")]
+	public partial class gws_Old : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -770,7 +781,7 @@ namespace GiChecker.Database
     partial void OnIPChanged();
     #endregion
 		
-		public gws()
+		public gws_Old()
 		{
 			OnCreated();
 		}
@@ -811,6 +822,68 @@ namespace GiChecker.Database
 					this._IP = value;
 					this.SendPropertyChanged("IP");
 					this.OnIPChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.gws")]
+	public partial class gws : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _Address;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAddressChanging(long value);
+    partial void OnAddressChanged();
+    #endregion
+		
+		public gws()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
 				}
 			}
 		}

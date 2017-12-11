@@ -86,10 +86,9 @@ namespace GiChecker
         {
             using (IPv4DataContext db = new IPv4DataContext())
             {
-                var q = from item in db.IPv4SSL
-                        where item.Isgws
+                var q = from item in db.gws
                         select item.Address;
-                q = q.Union(db.gws.Select(f => f.Address));
+                q = q.Union(db.gws_Old.Select(f => f.Address));
                 var list = from item in q.ToList()
                            orderby item
                            group item by string.Format("{0}/24", ((uint)item & 0xFFFFFF00).ToIPAddress());
@@ -165,7 +164,6 @@ namespace GiChecker
         private void buttonGoogleIPHunter_Click(object sender, EventArgs e)
         {
             var files = Directory.GetFiles(@"G:\DxgWork\GitHub\GoogleIPHunter\trunk", "*.txt", SearchOption.AllDirectories);
-            List<IPNetwork> all = new List<IPNetwork>();
             using (IPv4DataContext db = new IPv4DataContext())
             {
                 foreach (var file in files)
