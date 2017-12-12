@@ -392,7 +392,7 @@ namespace GiChecker.TPL
                                     //CodeSite.SendNote("跳过");
                                     continue;
                                 }
-                                Search.WebCheck(ip);
+                                WebCheck(ip);
                                 if (ip.RoundtripTime != -1 && db.IPv4SSL.SingleOrDefault(f => f.Address == gws) == null)
                                 {
                                     db.IPv4SSL.InsertOnSubmit(ip);

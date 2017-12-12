@@ -23,14 +23,18 @@ namespace GiChecker.Database
             Isgws = Server == "gws";
         }
 
-        public IPv4SSL(uint address)
+        partial void OnCreated()
+        {
+            PropertyChanged += (sender, e) => { if (e.PropertyName != "UpdateTime") UpdateTime = DateTime.Now; };
+        }
+
+        public IPv4SSL(uint address):this()
         {
             Address = address;
             A = (byte)(address >> 24);
             IP = address.ToIPAddress().ToString();
             RoundtripTime = -1;
             Location = IPv4Location.Find(IP)[0];
-            PropertyChanged += (sender, e) => { if (e.PropertyName != "UpdateTime") UpdateTime = DateTime.Now; };
         }
     }
 }
