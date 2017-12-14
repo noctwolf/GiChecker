@@ -48,6 +48,9 @@ namespace GiChecker.Database
     partial void Insertgws(gws instance);
     partial void Updategws(gws instance);
     partial void Deletegws(gws instance);
+    partial void InsertGoogle(Google instance);
+    partial void UpdateGoogle(Google instance);
+    partial void DeleteGoogle(Google instance);
     #endregion
 		
 		public IPv4DataContext() : 
@@ -125,6 +128,14 @@ namespace GiChecker.Database
 			get
 			{
 				return this.GetTable<gws>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Google> Google
+		{
+			get
+			{
+				return this.GetTable<Google>();
 			}
 		}
 	}
@@ -864,6 +875,68 @@ namespace GiChecker.Database
     #endregion
 		
 		public gws()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Google")]
+	public partial class Google : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _Address;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAddressChanging(long value);
+    partial void OnAddressChanged();
+    #endregion
+		
+		public Google()
 		{
 			OnCreated();
 		}

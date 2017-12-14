@@ -64,6 +64,7 @@ namespace GiChecker.TPL
                 catch (Exception ex)
                 {
                     ex.SendCodeSite("SaveDB");
+                    CodeSite.Send("ipa.First().IP", ipa.First().IP);
                 }
             }
             return false;

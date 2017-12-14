@@ -47,4 +47,9 @@
       <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.Google" Member="Google">
+    <Type Name="Google">
+      <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+    </Type>
+  </Table>
 </Database>

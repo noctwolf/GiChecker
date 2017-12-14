@@ -38,5 +38,11 @@
         <elementListCompartment Id="8a13b575-a382-4f9e-b838-4b14547f8d25" absoluteBounds="7.7650000000000006, 1.46, 1.9700000000000002, 0.42292277018229169" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="e855a12d-efa0-4506-8907-744d58534128" absoluteBounds="7.75, 2.625, 2, 0.98292277018229179">
+      <DataClassMoniker Name="/IPv4DataContext/Google" />
+      <nestedChildShapes>
+        <elementListCompartment Id="37980bdc-76fe-454c-a81a-62cc9a3b92c0" absoluteBounds="7.7650000000000006, 3.085, 1.9700000000000002, 0.42292277018229169" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

@@ -120,7 +120,11 @@ namespace GiChecker
         {
             using (IPv4DataContext db = new IPv4DataContext())
             {
-                foreach (var ip in db.IPv4SSL.Where(f => f.IsGoogle && f.Server == null).OrderBy(f => f.Address))
+                //var q = from g in db.Google
+                //        join i in db.IPv4SSL on g.Address equals i.Address
+                //        where i.Server == null
+                //        select i.Address;
+                foreach (var ip in db.IPv4SSL.Join(db.Google, i => i.Address, g => g.Address, (i, g) => i).Where(f => f.Server == null).OrderBy(f => f.Address))
                 {
                     CodeSite.Send("IP", ip.IP);
                     Search.WebCheck(ip);
