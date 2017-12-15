@@ -51,6 +51,9 @@ namespace GiChecker.Database
     partial void InsertGoogle(Google instance);
     partial void UpdateGoogle(Google instance);
     partial void DeleteGoogle(Google instance);
+    partial void InsertSnifferProgress(SnifferProgress instance);
+    partial void UpdateSnifferProgress(SnifferProgress instance);
+    partial void DeleteSnifferProgress(SnifferProgress instance);
     #endregion
 		
 		public IPv4DataContext() : 
@@ -137,6 +140,20 @@ namespace GiChecker.Database
 			{
 				return this.GetTable<Google>();
 			}
+		}
+		
+		public System.Data.Linq.Table<SnifferProgress> SnifferProgress
+		{
+			get
+			{
+				return this.GetTable<SnifferProgress>();
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ClientNetAddress", IsComposable=true)]
+		public string ClientNetAddress()
+		{
+			return ((string)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod()))).ReturnValue));
 		}
 	}
 	
@@ -957,6 +974,116 @@ namespace GiChecker.Database
 					this._Address = value;
 					this.SendPropertyChanged("Address");
 					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SnifferProgress")]
+	public partial class SnifferProgress : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _IP;
+		
+		private string _Ping;
+		
+		private string _Ssl;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIPChanging(string value);
+    partial void OnIPChanged();
+    partial void OnPingChanging(string value);
+    partial void OnPingChanged();
+    partial void OnSslChanging(string value);
+    partial void OnSslChanged();
+    #endregion
+		
+		public SnifferProgress()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IP", DbType="VarChar(15) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string IP
+		{
+			get
+			{
+				return this._IP;
+			}
+			set
+			{
+				if ((this._IP != value))
+				{
+					this.OnIPChanging(value);
+					this.SendPropertyChanging();
+					this._IP = value;
+					this.SendPropertyChanged("IP");
+					this.OnIPChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ping", DbType="VarChar(15)")]
+		public string Ping
+		{
+			get
+			{
+				return this._Ping;
+			}
+			set
+			{
+				if ((this._Ping != value))
+				{
+					this.OnPingChanging(value);
+					this.SendPropertyChanging();
+					this._Ping = value;
+					this.SendPropertyChanged("Ping");
+					this.OnPingChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ssl", DbType="VarChar(15)")]
+		public string Ssl
+		{
+			get
+			{
+				return this._Ssl;
+			}
+			set
+			{
+				if ((this._Ssl != value))
+				{
+					this.OnSslChanging(value);
+					this.SendPropertyChanging();
+					this._Ssl = value;
+					this.SendPropertyChanged("Ssl");
+					this.OnSslChanged();
 				}
 			}
 		}

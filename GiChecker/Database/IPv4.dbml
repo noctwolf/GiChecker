@@ -52,4 +52,14 @@
       <Column Name="Address" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.SnifferProgress" Member="SnifferProgress">
+    <Type Name="SnifferProgress">
+      <Column Name="IP" Type="System.String" DbType="VarChar(15) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ping" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="Ssl" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.ClientNetAddress" Method="ClientNetAddress" IsComposable="true">
+    <Return Type="System.String" />
+  </Function>
 </Database>

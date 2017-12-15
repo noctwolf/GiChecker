@@ -81,7 +81,11 @@
     <Compile Include="Net\IPv4Location.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TPL\PingSniffer.cs" />
     <Compile Include="TPL\Search.cs" />
+    <Compile Include="TPL\Sniffer.cs" />
+    <Compile Include="TPL\Progress.cs" />
+    <Compile Include="TPL\SslSniffer.cs" />
     <Compile Include="UC\UCFormAlign.cs">
       <SubType>UserControl</SubType>
     </Compile>

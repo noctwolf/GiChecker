@@ -44,5 +44,11 @@
         <elementListCompartment Id="37980bdc-76fe-454c-a81a-62cc9a3b92c0" absoluteBounds="7.7650000000000006, 3.085, 1.9700000000000002, 0.42292277018229169" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="99cf9b41-a844-42e0-8bdd-a07f5f62ed0d" absoluteBounds="0.75, 2.625, 2, 1.3525109863281251">
+      <DataClassMoniker Name="/IPv4DataContext/SnifferProgress" />
+      <nestedChildShapes>
+        <elementListCompartment Id="227ff200-d2d2-4768-90d7-a05de6f38ba8" absoluteBounds="0.76500000000000012, 3.085, 1.9700000000000002, 0.792510986328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

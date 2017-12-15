@@ -19,5 +19,10 @@ namespace GiChecker.Net
         {
             return new IPAddress(BitConverter.GetBytes(value).Reverse().ToArray());
         }
+
+        public static IPAddress ToIPAddress(this int value)
+        {
+            return ((uint)value).ToIPAddress();
+        }
     }
 }

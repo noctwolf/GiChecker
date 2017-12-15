@@ -32,6 +32,10 @@ namespace GiChecker
                 ProgressIP = new Progress<IPv4SSL>(p => bindingSource1.Add(p)),
                 ProgressString = new Progress<string>(p => labelCount.Text = p)
             };
+            //sniffer = new Sniffer()
+            {
+                //PingTimeout = 1000
+            };
             using (IPv4DataContext db = new IPv4DataContext())
             {
                 IPNetworkSet.IPv4Assigned.Add(string.Join(Environment.NewLine, db.IPv4Assigned.Select(f => f.IPBlock)));
@@ -213,6 +217,16 @@ namespace GiChecker
         private void buttongws_Click(object sender, EventArgs e)
         {
             if (!search.Cancel()) search.gwsAsync();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            CodeSite.Send("Progress.Ping", Progress.Ping);
+            CodeSite.Send("Progress.Ssl", Progress.Ssl);
+            Progress.Ping = "1.0.0.0";
+            Progress.Ssl = "1.0.0.0";
+            CodeSite.Send("Progress.Ping", Progress.Ping);
+            CodeSite.Send("Progress.Ssl", Progress.Ssl);
         }
     }
 }
