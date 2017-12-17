@@ -84,7 +84,13 @@
     <Compile Include="TPL\PingSniffer.cs" />
     <Compile Include="TPL\Search.cs" />
     <Compile Include="TPL\Sniffer.cs" />
-    <Compile Include="TPL\Progress.cs" />
+    <Compile Include="TPL\LastProgress.cs" />
+    <Compile Include="TPL\SnifferForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TPL\SnifferForm.Designer.cs">
+      <DependentUpon>SnifferForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TPL\SslSniffer.cs" />
     <Compile Include="UC\UCFormAlign.cs">
       <SubType>UserControl</SubType>
@@ -93,6 +99,9 @@
       <DependentUpon>UCFormAlign.cs</DependentUpon>
     </Compile>
     <Compile Include="Upgrade\FromNew.cs" />
+    <EmbeddedResource Include="TPL\SnifferForm.resx">
+      <DependentUpon>SnifferForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UC\UCFormAlign.resx">
       <DependentUpon>UCFormAlign.cs</DependentUpon>
     </EmbeddedResource>

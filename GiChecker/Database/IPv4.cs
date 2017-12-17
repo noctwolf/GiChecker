@@ -2,10 +2,11 @@ using System;
 using System.Linq;
 using Raize.CodeSiteLogging;
 using GiChecker.Net;
+using System.Collections.Generic;
 
 namespace GiChecker.Database
 {
-    partial class IPv4SSL
+    partial class IPv4SSL : IComparable<IPv4SSL>
     {
         partial void OnIssuerChanged()
         {
@@ -38,6 +39,11 @@ namespace GiChecker.Database
             IP = address.ToIPAddress().ToString();
             RoundtripTime = -1;
             Location = IPv4Location.Find(IP)[0];
+        }
+
+        public int CompareTo(IPv4SSL other)
+        {
+            return Address.CompareTo(other.Address);
         }
     }
 }

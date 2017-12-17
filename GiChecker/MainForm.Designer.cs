@@ -40,16 +40,17 @@
             this.归属地 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.ucFormAlign1 = new GiChecker.UC.UCFormAlign();
             this.button扫描全球 = new System.Windows.Forms.Button();
             this.buttongws = new System.Windows.Forms.Button();
             this.labelCount = new System.Windows.Forms.Label();
             this.buttonServernull = new System.Windows.Forms.Button();
             this.buttonMMF = new System.Windows.Forms.Button();
+            this.buttonPing = new System.Windows.Forms.Button();
             this.buttonGoogleIP = new System.Windows.Forms.Button();
             this.buttonGoogleIPHunter = new System.Windows.Forms.Button();
             this.buttonIPv4Location = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.ucFormAlign1 = new GiChecker.UC.UCFormAlign();
+            this.buttonSsl = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -164,7 +165,8 @@
             this.flowLayoutPanel1.Controls.Add(this.labelCount);
             this.flowLayoutPanel1.Controls.Add(this.buttonServernull);
             this.flowLayoutPanel1.Controls.Add(this.buttonMMF);
-            this.flowLayoutPanel1.Controls.Add(this.button1);
+            this.flowLayoutPanel1.Controls.Add(this.buttonPing);
+            this.flowLayoutPanel1.Controls.Add(this.buttonSsl);
             this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIP);
             this.flowLayoutPanel1.Controls.Add(this.buttonGoogleIPHunter);
             this.flowLayoutPanel1.Controls.Add(this.buttonIPv4Location);
@@ -173,6 +175,13 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(784, 58);
             this.flowLayoutPanel1.TabIndex = 6;
+            // 
+            // ucFormAlign1
+            // 
+            this.ucFormAlign1.Location = new System.Drawing.Point(3, 3);
+            this.ucFormAlign1.Name = "ucFormAlign1";
+            this.ucFormAlign1.Size = new System.Drawing.Size(23, 23);
+            this.ucFormAlign1.TabIndex = 8;
             // 
             // button扫描全球
             // 
@@ -230,10 +239,20 @@
             this.buttonMMF.UseVisualStyleBackColor = true;
             this.buttonMMF.Click += new System.EventHandler(this.buttonMMF_Click);
             // 
+            // buttonPing
+            // 
+            this.buttonPing.Location = new System.Drawing.Point(3, 32);
+            this.buttonPing.Name = "buttonPing";
+            this.buttonPing.Size = new System.Drawing.Size(75, 23);
+            this.buttonPing.TabIndex = 10;
+            this.buttonPing.Text = "Ping";
+            this.buttonPing.UseVisualStyleBackColor = true;
+            this.buttonPing.Click += new System.EventHandler(this.buttonPing_Click);
+            // 
             // buttonGoogleIP
             // 
             this.buttonGoogleIP.AutoSize = true;
-            this.buttonGoogleIP.Location = new System.Drawing.Point(84, 32);
+            this.buttonGoogleIP.Location = new System.Drawing.Point(165, 32);
             this.buttonGoogleIP.Name = "buttonGoogleIP";
             this.buttonGoogleIP.Size = new System.Drawing.Size(99, 23);
             this.buttonGoogleIP.TabIndex = 4;
@@ -244,7 +263,7 @@
             // buttonGoogleIPHunter
             // 
             this.buttonGoogleIPHunter.AutoSize = true;
-            this.buttonGoogleIPHunter.Location = new System.Drawing.Point(189, 32);
+            this.buttonGoogleIPHunter.Location = new System.Drawing.Point(270, 32);
             this.buttonGoogleIPHunter.Name = "buttonGoogleIPHunter";
             this.buttonGoogleIPHunter.Size = new System.Drawing.Size(99, 23);
             this.buttonGoogleIPHunter.TabIndex = 5;
@@ -256,7 +275,7 @@
             // 
             this.buttonIPv4Location.AutoSize = true;
             this.flowLayoutPanel1.SetFlowBreak(this.buttonIPv4Location, true);
-            this.buttonIPv4Location.Location = new System.Drawing.Point(294, 32);
+            this.buttonIPv4Location.Location = new System.Drawing.Point(375, 32);
             this.buttonIPv4Location.Name = "buttonIPv4Location";
             this.buttonIPv4Location.Size = new System.Drawing.Size(87, 23);
             this.buttonIPv4Location.TabIndex = 6;
@@ -264,22 +283,15 @@
             this.buttonIPv4Location.UseVisualStyleBackColor = true;
             this.buttonIPv4Location.Click += new System.EventHandler(this.buttonIPv4DB_Click);
             // 
-            // button1
+            // buttonSsl
             // 
-            this.button1.Location = new System.Drawing.Point(3, 32);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // ucFormAlign1
-            // 
-            this.ucFormAlign1.Location = new System.Drawing.Point(3, 3);
-            this.ucFormAlign1.Name = "ucFormAlign1";
-            this.ucFormAlign1.Size = new System.Drawing.Size(23, 23);
-            this.ucFormAlign1.TabIndex = 8;
+            this.buttonSsl.Location = new System.Drawing.Point(84, 32);
+            this.buttonSsl.Name = "buttonSsl";
+            this.buttonSsl.Size = new System.Drawing.Size(75, 23);
+            this.buttonSsl.TabIndex = 11;
+            this.buttonSsl.Text = "Ssl";
+            this.buttonSsl.UseVisualStyleBackColor = true;
+            this.buttonSsl.Click += new System.EventHandler(this.buttonSsl_Click);
             // 
             // MainForm
             // 
@@ -322,7 +334,8 @@
         private System.Windows.Forms.Button buttonIPv4Location;
         private UC.UCFormAlign ucFormAlign1;
         private System.Windows.Forms.Button buttongws;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonPing;
+        private System.Windows.Forms.Button buttonSsl;
     }
 }
 

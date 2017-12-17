@@ -23,6 +23,8 @@ namespace GiChecker
     public partial class MainForm : Form
     {
         readonly Search search;
+        readonly PingSniffer pingSniffer;
+        readonly SslSniffer sslSniffer;
 
         public MainForm()
         {
@@ -32,9 +34,15 @@ namespace GiChecker
                 ProgressIP = new Progress<IPv4SSL>(p => bindingSource1.Add(p)),
                 ProgressString = new Progress<string>(p => labelCount.Text = p)
             };
-            //sniffer = new Sniffer()
+            pingSniffer = new PingSniffer()
             {
-                //PingTimeout = 1000
+                ProgressIPv4SSL = new Progress<IPv4SSL>(p => bindingSource1.Add(p)),
+                ProgressString = new Progress<string>(p => labelCount.Text = p)
+            };
+            sslSniffer = new SslSniffer()
+            {
+                ProgressIPv4SSL = new Progress<IPv4SSL>(p => bindingSource1.Add(p)),
+                ProgressString = new Progress<string>(p => labelCount.Text = p)
             };
             using (IPv4DataContext db = new IPv4DataContext())
             {
@@ -60,6 +68,8 @@ namespace GiChecker
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             search.Cancel();
+            pingSniffer.Cancel();
+            sslSniffer.Cancel();
         }
 
         static bool SaveFile(string filename, IEnumerable<string> list)
@@ -219,14 +229,22 @@ namespace GiChecker
             if (!search.Cancel()) search.gwsAsync();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonPing_Click(object sender, EventArgs e)
         {
-            CodeSite.Send("Progress.Ping", Progress.Ping);
-            CodeSite.Send("Progress.Ssl", Progress.Ssl);
-            Progress.Ping = "1.0.0.0";
-            Progress.Ssl = "1.0.0.0";
-            CodeSite.Send("Progress.Ping", Progress.Ping);
-            CodeSite.Send("Progress.Ssl", Progress.Ssl);
+            if (!pingSniffer.Cancel())
+            {
+                SnifferForm.SetParam(pingSniffer);
+                pingSniffer.GlobalAsync();
+            }
+        }
+
+        private void buttonSsl_Click(object sender, EventArgs e)
+        {
+            if (!sslSniffer.Cancel())
+            {
+                SnifferForm.SetParam(sslSniffer);
+                sslSniffer.GlobalAsync();
+            }
         }
     }
 }

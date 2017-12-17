@@ -8,7 +8,7 @@ using GiChecker.Net;
 
 namespace GiChecker.TPL
 {
-    static class Progress
+    static class LastProgress
     {
         public static string Ping
         {
@@ -58,6 +58,18 @@ namespace GiChecker.TPL
                     }
                     sp.Ssl = value;
                     db.SubmitChanges();
+                }
+            }
+        }
+
+        public static uint MaxIP
+        {
+            get
+            {
+                using (IPv4DataContext db = new IPv4DataContext())
+                {
+                    var ip = db.IPv4SSL.OrderByDescending(f => f.Address).FirstOrDefault();
+                    return ip != null ? Math.Min((uint)ip.Address, uint.MaxValue) : 0;
                 }
             }
         }
