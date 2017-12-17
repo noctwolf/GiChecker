@@ -140,7 +140,8 @@ namespace GiChecker.TPL
             {
                 ex.SendCodeSite("OperationCanceledException");
             }
-            while (bcIPv4SSL.Count > 0)
+            forceSave = true;
+            while (!forceSave)
             {
                 CodeSite.SendReminder("等待数据保存完毕");
                 Thread.Sleep(1000);

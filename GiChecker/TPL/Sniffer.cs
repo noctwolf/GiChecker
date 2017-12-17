@@ -19,6 +19,7 @@ namespace GiChecker.TPL
         protected CancellationTokenSource cts;
         protected string progressFormat;
         protected int progressCount;
+        protected bool forceSave = false;
 
         public Task Task { get; protected set; }
         public int Timeout { get; set; }
@@ -104,13 +105,15 @@ namespace GiChecker.TPL
                             }
                             else
                             {
-                                if (bcIPv4SSL.IsCompleted) break;
+                                forceSave = forceSave && list.Count > 0;
+                                if (forceSave || bcIPv4SSL.IsCompleted) break;
                                 if (bcIPv4SSL.Count == 0) Thread.Sleep(1000);
                             }
                         }
                         if (list.Count > 0)
                         {
                             while (!SaveDB(list) && !cts.IsCancellationRequested) Thread.Sleep(1000);
+                            forceSave = forceSave && bcIPv4SSL.Count > 0;
                             list.Clear();
                         }
                     }
