@@ -40,89 +40,65 @@ namespace GiChecker.TPL
 
         public static bool SetMinThreads(int threadCount)
         {
-            CodeSite.EnterMethod("Sniffer." + "SetMinThreads");
-            try
+            int workerMin, workerMax, workerA, completionPort;
+            ThreadPool.GetAvailableThreads(out workerA, out completionPort);
+            ThreadPool.GetMaxThreads(out workerMax, out completionPort);
+            ThreadPool.GetMinThreads(out workerMin, out completionPort);
+            //CodeSite.Send("workerA", workerA);
+            //CodeSite.Send("workerMax", workerMax);
+            //CodeSite.Send("workerMin", workerMin);
+            int worker = workerMax - workerA + threadCount + 200;
+            //CodeSite.Send("worker", worker);
+            if (worker > workerMin)
             {
-                int workerMin, workerMax, workerA, completionPort;
-                ThreadPool.GetAvailableThreads(out workerA, out completionPort);
-                ThreadPool.GetMaxThreads(out workerMax, out completionPort);
-                ThreadPool.GetMinThreads(out workerMin, out completionPort);
-                CodeSite.Send("workerA", workerA);
-                CodeSite.Send("workerMax", workerMax);
-                CodeSite.Send("workerMin", workerMin);
-                int worker = workerMax - workerA + threadCount + 200;
+                worker = Math.Min(worker, workerMax);
                 CodeSite.Send("worker", worker);
-                if (worker > workerMin)
-                {
-                    worker = Math.Min(worker, workerMax);
-                    CodeSite.Send("worker", worker);
-                    return ThreadPool.SetMinThreads(worker, completionPort);
-                }
-                else
-                    return true;
+                return ThreadPool.SetMinThreads(worker, completionPort);
             }
-            finally
-            {
-                CodeSite.ExitMethod("Sniffer." + "SetMinThreads");
-            }
+            else
+                return true;
         }
 
         protected void CheckTask()
         {
-            CodeSite.EnterMethod(this, "CheckTask");
-            try
-            {
-                if (cts != null && !cts.IsCancellationRequested)
-                    throw new Exception("有未完成的任务，请先取消任务");
-                else
-                    SetMinThreads(MaxDegreeOfParallelism);
-            }
-            finally
-            {
-                CodeSite.ExitMethod(this, "CheckTask");
-            }
+            if (cts != null && !cts.IsCancellationRequested)
+                throw new Exception("有未完成的任务，请先取消任务");
+            else
+                SetMinThreads(MaxDegreeOfParallelism);
         }
 
         protected abstract bool SaveDB(IEnumerable<IPv4SSL> ipa);
 
         protected Task SaveAsync()
         {
-            CodeSite.EnterMethod(this, "SaveAsync");
-            try
+            bcIPv4SSL = new BlockingCollection<IPv4SSL>();
+            return Task.Run(() =>
             {
-                bcIPv4SSL = new BlockingCollection<IPv4SSL>();
-                return Task.Run(() =>
+                List<IPv4SSL> list = new List<IPv4SSL>();
+                IPv4SSL ip;
+                while (!cts.IsCancellationRequested || !bcIPv4SSL.IsCompleted)
                 {
-                    List<IPv4SSL> list = new List<IPv4SSL>();
-                    IPv4SSL ip;
-                    while (!cts.IsCancellationRequested || !bcIPv4SSL.IsCompleted)
+                    while (list.Count < 1000)
                     {
-                        while (list.Count < 1000)
+                        if (bcIPv4SSL.TryTake(out ip))
                         {
-                            if (bcIPv4SSL.TryTake(out ip))
-                            {
-                                list.Add(ip);
-                            }
-                            else
-                            {
-                                forceSave = forceSave && list.Count > 0;
-                                if (forceSave || bcIPv4SSL.IsCompleted) break;
-                                if (bcIPv4SSL.Count == 0) Thread.Sleep(1000);
-                            }
+                            list.Add(ip);
                         }
-                        if (list.Count > 0)
+                        else
                         {
-                            while (!SaveDB(list) && !cts.IsCancellationRequested) Thread.Sleep(1000);
-                            forceSave = forceSave && bcIPv4SSL.Count > 0;
-                            list.Clear();
+                            forceSave = forceSave && list.Count > 0;
+                            if (forceSave || bcIPv4SSL.IsCompleted) break;
+                            if (bcIPv4SSL.Count == 0) Thread.Sleep(1000);
                         }
                     }
-                }, cts.Token);
-            }
-            finally
-            {
-                CodeSite.ExitMethod(this, "SaveAsync");
-            }
+                    if (list.Count > 0)
+                    {
+                        while (!SaveDB(list) && !cts.IsCancellationRequested) Thread.Sleep(1000);
+                        forceSave = forceSave && bcIPv4SSL.Count > 0;
+                        list.Clear();
+                    }
+                }
+            }, cts.Token);
         }
 
         protected void Shuffle()
@@ -159,21 +135,13 @@ namespace GiChecker.TPL
 
         public Task TestAsync()
         {
-            CodeSite.EnterMethod(this, "TestAsync");
-            try
+            CheckTask();
+            cts = new CancellationTokenSource();
+            Task = Task.Run(() =>
             {
-                CheckTask();
-                cts = new CancellationTokenSource();
-                Task = Task.Run(() =>
-                {
 
-                }, cts.Token);
-                return Task;
-            }
-            finally
-            {
-                CodeSite.ExitMethod(this, "TestAsync");
-            }
+            }, cts.Token);
+            return Task;
         }
     }
 }

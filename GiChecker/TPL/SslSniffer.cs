@@ -82,7 +82,7 @@ namespace GiChecker.TPL
                         listIP = listIPv4SSL.Select(f => (uint)f.Address).ToList();
                         if (listIP.Count > 0)
                         {
-                            //CodeSite.Send("listIP.Count", listIP.Count);
+                            CodeSite.Send("listIP.Count", listIP.Count);
                             LastProgress.Ssl = listIP.First().ToIPAddress().ToString();
                             CodeSite.Send("StartIP", LastProgress.Ssl);
                             progressFormat = string.Format("{0}-{1},{{0,8}}/{2},新增{{1,8}}", listIP.First().ToIPAddress(), listIP.Last().ToIPAddress(), listIP.Count);
@@ -107,6 +107,7 @@ namespace GiChecker.TPL
 
         private void CheckList()
         {
+            progressCount = 0;
             int newCount = 0, lastCount = progressCount, tempCount;
             Timer timer;
             if (ProgressString != null)
@@ -141,12 +142,12 @@ namespace GiChecker.TPL
                 ex.SendCodeSite("OperationCanceledException");
             }
             forceSave = true;
-            while (!forceSave)
+            while (forceSave)
             {
-                CodeSite.SendReminder("等待数据保存完毕");
+                //CodeSite.SendReminder("等待数据保存完毕");
                 Thread.Sleep(1000);
             }
-            CodeSite.Send("newCount", newCount);
+            CodeSite.Send("新增数据", newCount);
 
             if (timer != null) timer.Dispose();
         }

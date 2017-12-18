@@ -119,7 +119,7 @@ namespace GiChecker.TPL
             {
                 ex.SendCodeSite("OperationCanceledException");
             }
-            CodeSite.Send("newCount", newCount);
+            CodeSite.Send("新增数据", newCount);
 
             if (timer != null) timer.Dispose();
         }
