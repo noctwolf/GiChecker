@@ -64,38 +64,43 @@ namespace GiChecker.TPL
                 cts = new CancellationTokenSource();
                 Task = Task.Run(() =>
                 {
-                    var save = SaveAsync();
-                    Thread.CurrentThread.Name = "GlobalAsync";
-                    IPAddress ip = IPAddress.Parse(LastProgress.Ssl);
-                    CodeSite.Send("LastIP", ip.ToString());
-                    IPNetwork net = IPNetwork.Parse(ip.ToString(), 12);
-                    while (net.Broadcast.ToUInt32() < LastProgress.MaxIP)
+                    try
                     {
-                        if (cts.IsCancellationRequested) break;
-                        using (IPv4DataContext db = new IPv4DataContext())
+                        var save = SaveAsync();
+                        Thread.CurrentThread.Name = "GlobalAsync";
+                        IPAddress ip = IPAddress.Parse(LastProgress.Ssl);
+                        CodeSite.Send("LastIP", ip.ToString());
+                        IPNetwork net = IPNetwork.Parse(ip.ToString(), 12);
+                        while (net.Broadcast.ToUInt32() < LastProgress.MaxIP)
                         {
-                            listIPv4SSL = db.IPv4SSL
-                                .Where(f => !f.IsSSL && f.Address >= net.Network.ToUInt32() && f.Address <= net.Broadcast.ToUInt32())
-                                .OrderBy(f => f.Address)
-                                .ToList();
+                            if (cts.IsCancellationRequested) break;
+                            using (IPv4DataContext db = new IPv4DataContext())
+                            {
+                                listIPv4SSL = db.IPv4SSL
+                                    .Where(f => !f.IsSSL && f.Address >= net.Network.ToUInt32() && f.Address <= net.Broadcast.ToUInt32())
+                                    .OrderBy(f => f.Address)
+                                    .ToList();
+                            }
+                            listIP = listIPv4SSL.Select(f => (uint)f.Address).ToList();
+                            if (listIP.Count > 0)
+                            {
+                                LastProgress.Ssl = listIP.First().ToIPAddress().ToString();
+                                CodeSite.Send("StartIP", string.Format("{0} - {1}", LastProgress.Ssl, listIP.Count));
+                                progressFormat = string.Format("{0}-{1},{{0,8}}/{2},新增{{1,8}}", listIP.First().ToIPAddress(), listIP.Last().ToIPAddress(), listIP.Count);
+                                Shuffle();
+                                CheckList();
+                                listIP.Clear();
+                            }
+                            if (net.Broadcast.ToUInt32() == uint.MaxValue) break;
+                            net = IPNetwork.Parse((net.Broadcast.ToUInt32() + 1).ToIPAddress(), net.Netmask);
                         }
-                        listIP = listIPv4SSL.Select(f => (uint)f.Address).ToList();
-                        if (listIP.Count > 0)
-                        {
-                            CodeSite.Send("listIP.Count", listIP.Count);
-                            LastProgress.Ssl = listIP.First().ToIPAddress().ToString();
-                            CodeSite.Send("StartIP", LastProgress.Ssl);
-                            progressFormat = string.Format("{0}-{1},{{0,8}}/{2},新增{{1,8}}", listIP.First().ToIPAddress(), listIP.Last().ToIPAddress(), listIP.Count);
-                            Shuffle();
-                            CheckList();
-                            listIP.Clear();
-                        }
-                        if (net.Broadcast.ToUInt32() == uint.MaxValue) break;
-                        net = IPNetwork.Parse((net.Broadcast.ToUInt32() + 1).ToIPAddress(), net.Netmask);
+                        bcIPv4SSL.CompleteAdding();
+                        save.Wait();
                     }
-                    bcIPv4SSL.CompleteAdding();
-                    save.Wait();
-                    //cts.Token.ThrowIfCancellationRequested();
+                    catch (Exception ex)
+                    {
+                        ex.SendCodeSite("GlobalAsync");
+                    }
                 }, cts.Token);
                 return Task;
             }

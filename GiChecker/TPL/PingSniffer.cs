@@ -47,35 +47,41 @@ namespace GiChecker.TPL
                 cts = new CancellationTokenSource();
                 Task = Task.Run(() =>
                 {
-                    var save = SaveAsync();
-                    Thread.CurrentThread.Name = "GlobalAsync";
-                    IPAddress ip = IPAddress.Parse(LastProgress.Ping);
-                    CodeSite.Send("LastIP", ip.ToString());
-                    IPNetwork net = IPNetwork.Parse(ip.ToString(), 12);
-                    uint count = (uint)net.Total / 256;
-                    for (uint i = net.Network.ToUInt32() >> 8; i <= uint.MaxValue >> 8; i++)
+                    try
                     {
-                        if (cts.IsCancellationRequested) break;
-                        uint uip = i << 8;
-                        if (!IPNetworkSet.IPv4Reserved.Contains(uip) && !IPNetworkSet.IPv4Assigned.Contains(uip) ^ Properties.Settings.Default.IPv4Assigned)
-                            for (uint j = 0; j < 256; j++) listIP.Add(uip + j);
-                        if (i % count == count - 1)//每组
+                        var save = SaveAsync();
+                        Thread.CurrentThread.Name = "GlobalAsync";
+                        IPAddress ip = IPAddress.Parse(LastProgress.Ping);
+                        CodeSite.Send("LastIP", ip.ToString());
+                        IPNetwork net = IPNetwork.Parse(ip.ToString(), 12);
+                        uint count = (uint)net.Total / 256;
+                        for (uint i = net.Network.ToUInt32() >> 8; i <= uint.MaxValue >> 8; i++)
                         {
-                            if (listIP.Count > 0)
+                            if (cts.IsCancellationRequested) break;
+                            uint uip = i << 8;
+                            if (!IPNetworkSet.IPv4Reserved.Contains(uip) && !IPNetworkSet.IPv4Assigned.Contains(uip) ^ Properties.Settings.Default.IPv4Assigned)
+                                for (uint j = 0; j < 256; j++) listIP.Add(uip + j);
+                            if (i % count == count - 1)//每组
                             {
-                                //CodeSite.Send("listIP.Count", listIP.Count);
-                                LastProgress.Ping = listIP.First().ToIPAddress().ToString();
-                                CodeSite.Send("StartIP", LastProgress.Ping);
-                                progressFormat = string.Format("{0}-{1},{{0,8}}/{2},新增{{1,8}}", listIP.First().ToIPAddress(), listIP.Last().ToIPAddress(), listIP.Count);
-                                ExceptDB();
-                                CheckList();
-                                listIP.Clear();
+                                if (listIP.Count > 0)
+                                {
+                                    //CodeSite.Send("listIP.Count", listIP.Count);
+                                    LastProgress.Ping = listIP.First().ToIPAddress().ToString();
+                                    CodeSite.Send("StartIP", LastProgress.Ping);
+                                    progressFormat = string.Format("{0}-{1},{{0,8}}/{2},新增{{1,8}}", listIP.First().ToIPAddress(), listIP.Last().ToIPAddress(), listIP.Count);
+                                    ExceptDB();
+                                    CheckList();
+                                    listIP.Clear();
+                                }
                             }
                         }
+                        bcIPv4SSL.CompleteAdding();
+                        save.Wait();
                     }
-                    bcIPv4SSL.CompleteAdding();
-                    save.Wait();
-                    //cts.Token.ThrowIfCancellationRequested();
+                    catch (Exception ex)
+                    {
+                        ex.SendCodeSite("GlobalAsync");
+                    }
                 }, cts.Token);
                 return Task;
             }
