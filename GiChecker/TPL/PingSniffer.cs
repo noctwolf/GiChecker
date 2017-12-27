@@ -32,7 +32,7 @@ namespace GiChecker.TPL
                 catch (Exception ex)
                 {
                     ex.SendCodeSite("SaveDB");
-                    CodeSite.Send("ipa.First().IP", ipa.First().IP);
+                    CodeSite.Send("Count = {0}, FirstIP = {1}", ipa.Count(), ipa.First().IP);
                 }
             }
             return false;
@@ -53,7 +53,7 @@ namespace GiChecker.TPL
                         Thread.CurrentThread.Name = "GlobalAsync";
                         IPAddress ip = IPAddress.Parse(LastProgress.Ping);
                         CodeSite.Send("LastIP", ip.ToString());
-                        IPNetwork net = IPNetwork.Parse(ip.ToString(), 12);
+                        IPNetwork net = IPNetwork.Parse(ip.ToString(), 10);
                         uint count = (uint)net.Total / 256;
                         for (uint i = net.Network.ToUInt32() >> 8; i <= uint.MaxValue >> 8; i++)
                         {

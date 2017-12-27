@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
-using GiChecker.Net;
+using System.Net;
 using Raize.CodeSiteLogging;
 using System.Threading;
 using System.Collections.Concurrent;

@@ -35,6 +35,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NW.Extensions, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NW.Extensions.1.0.0.1\lib\net45\NW.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Raize.CodeSiteLogging, Version=5.1.6.0, Culture=neutral, PublicKeyToken=5979856d688ff136, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -69,9 +73,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IPv4.dbml</DependentUpon>
     </Compile>
-    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Net\IPNetworkSet.cs" />
-    <Compile Include="Net\IPAddressExtension.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

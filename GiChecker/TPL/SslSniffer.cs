@@ -55,6 +55,19 @@ namespace GiChecker.TPL
             return false;
         }
 
+        private bool SelectDB(IPAddress ip)
+        {
+            using (IPv4DataContext db = new IPv4DataContext())
+            {
+                listIPv4SSL = db.IPv4SSL
+                    .Where(f => !f.IsSSL && f.Address >= ip.ToUInt32())
+                    .OrderBy(f => f.Address)
+                    .Take(200000)
+                    .ToList();
+                return listIPv4SSL.Count > 0;
+            }
+        }
+
         public Task GlobalAsync()
         {
             CodeSite.EnterMethod(this, "GlobalAsync");
@@ -70,29 +83,16 @@ namespace GiChecker.TPL
                         Thread.CurrentThread.Name = "GlobalAsync";
                         IPAddress ip = IPAddress.Parse(LastProgress.Ssl);
                         CodeSite.Send("LastIP", ip.ToString());
-                        IPNetwork net = IPNetwork.Parse(ip.ToString(), 12);
-                        while (net.Broadcast.ToUInt32() < LastProgress.MaxIP)
+                        while (SelectDB(ip) && !cts.IsCancellationRequested)
                         {
-                            if (cts.IsCancellationRequested) break;
-                            using (IPv4DataContext db = new IPv4DataContext())
-                            {
-                                listIPv4SSL = db.IPv4SSL
-                                    .Where(f => !f.IsSSL && f.Address >= net.Network.ToUInt32() && f.Address <= net.Broadcast.ToUInt32())
-                                    .OrderBy(f => f.Address)
-                                    .ToList();
-                            }
                             listIP = listIPv4SSL.Select(f => (uint)f.Address).ToList();
-                            if (listIP.Count > 0)
-                            {
-                                LastProgress.Ssl = listIP.First().ToIPAddress().ToString();
-                                CodeSite.Send("StartIP", string.Format("{0} - {1}", LastProgress.Ssl, listIP.Count));
-                                progressFormat = string.Format("{0}-{1},{{0,8}}/{2},新增{{1,8}}", listIP.First().ToIPAddress(), listIP.Last().ToIPAddress(), listIP.Count);
-                                Shuffle();
-                                CheckList();
-                                listIP.Clear();
-                            }
-                            if (net.Broadcast.ToUInt32() == uint.MaxValue) break;
-                            net = IPNetwork.Parse((net.Broadcast.ToUInt32() + 1).ToIPAddress(), net.Netmask);
+                            LastProgress.Ssl = ip.ToString();
+                            CodeSite.Send("StartIP", string.Format("{0} - {1}", LastProgress.Ssl, listIP.Count));
+                            progressFormat = string.Format("{0}-{1},{{0,8}}/{2},新增{{1,8}}", listIP.First().ToIPAddress(), listIP.Last().ToIPAddress(), listIP.Count);
+                            ip = (listIP.Last() + 1).ToIPAddress();
+                            Shuffle();
+                            CheckList();
+                            listIP.Clear();
                         }
                         bcIPv4SSL.CompleteAdding();
                         save.Wait();
